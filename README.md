@@ -15,4 +15,4 @@
 <p>Tool</p>
 - IntelliJ IDEA Ultimate , git , maven, Thymeleaf
 <h3>ERD</h3>
-![image](https://github.com/HYUK0802/omcs/assets/121602888/a269b7a4-34f0-40ae-ac70-e157182de5b9)
+![스크린샷 2024-05-08 144350](https://github.com/HYUK0802/omcs/assets/121602888/6769dcfd-7841-4be5-b7b3-41b5770da3ef)
