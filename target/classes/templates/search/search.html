@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title> OMCS - 여행지검색</title>
+    <link rel="stylesheet" th:href="@{/resources/stylesheets/search/search.css}">
+    <link rel="stylesheet" th:href="@{/resources/stylesheets/detail.css}">
+
+    <script defer th:src="@{/resources/scripts/search/search.js}"></script>
+    <script defer th:src="@{/resources/scripts/detail.js}"></script>
+
+
+</head>
+<body>
+
+<div id="detailWindow">
+    <div class="close">
+        <img class="icon"
+             src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGQAAABkCAYAAABw4pVUAAAACXBIWXMAAAsTAAALEwEAmpwYAAAB3klEQVR4nO2dO3LCQBAFdSRzJBP5Bg5x6EtDO4HAFHZhI7RvZ7ozSOg3j+UjrUrLIiIiIiIiIiIi0gDgZbRDGsNmAnwAJ+BtiEAgwCtwBD5HlHHBUpZvZVzYphRgd/XCnB/vl6YA+x9mshv1bmi7UkiZRYzIQOJmECe0IbHZY8U6Z44X7Jh1GtFOGacT7pBtWvHKmaYPUDFLhSAUyFAmEBO7lwvGhM5lAzKRa/mgTODYJjDBbu2CE+jUdgAEuQwlYRAEOEQxciBYRs5gsIycAWEZOYPCMnIGhmXkDA7LeAxWHKBlrAQrlGIZK8MDpVjGk+AfpVjGk+EPpVjGRnBHKZaxMfxSimXkXYtxvPFc22tWNoXbK+Xh/yzynFJOljEALCQH/MjKAb/Uc8CfvTngH8Mc8NBJDnhwMQc8/J4DnqDKAU/h5oCbHHLAbUA5uFEuCLeSBuFm6yC8HCGIhHPgBDhEkDQIglyGkDgAAp2W7sEJdmsbmAkc2wVlItc2AZnQuXwwJnYvG4gCGWoFWQpkmT5ApUzTilfMNp1w5YzTiHbIGi/YKXOsWMfscUKdZxAjEsDwWXhTsMybgr13Xxl3rJTDsiXnUizjdimHUQLeevUKZyIiIiIiIiIiIksTvgDVpsD7YQ60fQAAAABJRU5ErkJggg==">
+    </div>
+    <iframe class="iframe"></iframe>
+</div>
+
+
+<div id="wrap">
+    <div class="head">
+        <div class="head-con">
+            <div class="logo">
+                <a href="/">
+                    <p>O<span>h</span> M<span>y</span> C<span>our</span>S<span>e</span></p>
+                </a>
+            </div>
+
+            <nav class="nav">
+                <ul class="main-menu">
+                    <li>
+                        <a href="/course">코스만들기</a>
+                    </li>
+                    <li>
+                        <a href="/community">커뮤니티</a>
+                    </li>
+                    <li>
+                        <a href="/notice">공지사항</a>
+                    </li>
+                    <li class="userLi" th:if="${session.user != null}">
+                        <a href="/mypage">마이페이지</a>
+                        <!--                    <a href="#"><img src="./icons/icons8-user-48.png" alt="마이페이지"></a>-->
+                        <ul class="sub-menu">
+                            <!-- <li><a href="#">내여행코스</a></li>
+                            <li><a href="#">비밀번호변경</a></li>
+                            <li><a href="#">찜리스트</a></li>
+                            <li><a href="#">??</a></li> -->
+                        </ul>
+                    </li>
+                    <li data-action="showLogin" th:if="${session.user == null}">
+                        <a href="/user/login" id="showLogin">로그인</a>
+                    </li>
+                    <li data-action="shouLogout" th:if="${session.user != null}">
+                        <a href="/user/logout" id="showLogout">로그아웃</a>
+                    </li>
+                </ul>
+
+            </nav>
+        </div>
+
+    </div>
+    <div class="search-container">
+        <form class="search-wrap" method="get">
+            <label style="display: none;" class="label">
+                <select name="c" class="input">
+                    <option selected value="title">제목</option>
+                    <option value="overview">내용</option>
+                </select>
+            </label>
+
+            <span class="omcs-span">OMCS</span>
+            <input class="search-input" name="q" placeholder="여행지를 검색해주세요"/>
+            <input class="search-btn" type="submit" value="검색"/>
+        </form>
+    </div>
+    <div class="search-result-container">
+        <div class="search-span-con">
+            <span>'<span th:text="${searchQuery}"></span>' 검색결과</span>
+        </div>
+        <div class="place-con">
+
+
+            <div class="place-box" th:each="searchPage : ${searchPage}">
+                <div class="image-container">
+                    <img alt="" class="image"
+                         th:src="${searchPage.getFirstImage()}">
+                </div>
+                <div class="spec-container">
+                    <div class="name-container">
+                        <span class="name" th:text="${searchPage.getTitle()}">경복궁</span>
+                        <span class="name overview" th:utext="${searchPage.getOverview()}">경복궁은~~~~~~~~~~~~~~~좋아요</span>
+                    </div>
+                    <div class="area-button-container">
+                        <button id="recommendBtn" class="recommend-button" th:data-index="${searchPage.getContentId()}">상세보기</button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <section class="page-section">
+            <ul id="pageContainer">
+                <li class="page" th:if="${PagingModel.requestPage > 1}">
+                    <a th:href="@{'./search'(p = ${1}, c=${searchCriterion}, q=${searchQuery})}" class="link">처음</a>
+                </li>
+                <li class="page" th:if="${PagingModel.requestPage > 1}">
+                    <a th:href="@{'./search' (p=${PagingModel.requestPage - 1}, c=${searchCriterion}, q=${searchQuery})}"
+                       class="link">이전</a>
+                </li>
+                <li class="page"
+                    th:each="page : ${#numbers.sequence(PagingModel.displayStartPage, PagingModel.displayEndPage)}">
+                    <a th:href="@{'./search' (p=${page}, c=${searchCriterion}, q=${searchQuery})}" class="link"
+                       th:text="${page}"></a>
+                </li>
+                <li class="page" th:if="${PagingModel.requestPage < PagingModel.maxPage}">
+                    <a th:href="@{'./search'(p=${PagingModel.maxPage}, c=${searchCriterion}, q=${searchQuery})}"
+                       class="link">다음</a>
+                </li>
+                <li class="page">
+                    <a class="link">마지막</a>
+                </li>
+            </ul>
+        </section>
+
+
+    </div>
+
+    <div id="cover"></div>
+
+    <div class="footer">
+        <div class="footer-con">
+            <span>SNS</span>
+            <a>이용약관 / 개인정보처리방침</a>
+            <span>대구 중구 중앙대로 366 9층, 10층</span>
+            <span>yeo328@kakao.com</span>
+            <span>omcs Co., Ltd All right reserved.</span>
+        </div>
+    </div>
+
+</div>
+</body>
+</html>

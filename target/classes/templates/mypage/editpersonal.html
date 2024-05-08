@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>개인정보수정</title>
+    <link rel="stylesheet" th:href="@{/resources/stylesheets/mypage/editpersonal.css}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Nanum+Gothic&family=Noto+Sans+KR:wght@100;300;400;900&family=Roboto:wght@100&display=swap"
+          rel="stylesheet">
+
+
+    <script src="https://kit.fontawesome.com/ba55ade6bc.js" crossorigin="anonymous"></script>
+    <script src="//code.jquery.com/jquery-3.3.1.min.js"></script>
+</head>
+<body>
+<header>
+    <h2 class="logo"><a href="/">오마코스</a></h2>
+    <nav class="navigation">
+        <a href="/community">커뮤니티</a>
+        <a href="/course">코스만들기</a>
+        <a href="/mypage">마이페이지</a>
+        <a href="/user/login">로그인</a>
+
+    </nav>
+</header>
+<!--        <a href="#" class="navbar _toogleBtn">-->
+<!--            <i class="fa-solid fa-bars"></i>-->
+<!--        </a>-->
+<div class="containerForm">
+    <div class="banner">
+        <div class="content">
+            <div>
+                <i class="fa-solid fa-person"></i>
+            </div>
+            <h2 th:text="${session.user.getNickname()}"><br> 반갑습니다!</h2>
+            <a href="/myplan">나의 일정</a>
+        </div>
+    </div>
+    <div class="personalInfo">
+        <div class="formBox">
+            <h3>개인정보 수정</h3>
+            <form>
+                <div class="inputContainer">
+                    <label class="md-title">닉네임</label>
+                    <div class="inputWithButton">
+                        <div class="inputBox">
+                            <div class="boxContent" style="font-weight: 200"
+                                 th:text="${session.user.getNickname()}"></div>
+                        </div>
+                        <a href="/myPage/editPersonal/modifyNickname">
+                            <button class="editButton" type="button">수정</button>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="inputContainer">
+                    <label class="md-title">이메일</label>
+                    <div class="inputWithButton">
+                        <div class="inputBox">
+                            <div class="boxContent" th:text="${session.user.getEmail()}">test@test.com</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="inputContainer">
+                    <label class="md-title">비밀번호</label>
+                    <div class="inputWithButton">
+                        <div class="inputBox">
+                            <div class="boxContent" style="font-weight: 200">변경하기</div>
+                        </div>
+                        <a href="/myPage/editPersonal/modifyPassword">
+                            <button class="editButton" type="button">수정</button>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="inputContainer">
+                    <label class="md-title">전화번호</label>
+                    <div class="inputWithButton">
+                        <div class="inputBox">
+                            <div class="boxContent" th:text="${session.user.getContact()}">010-****-****</div>
+                        </div>
+                    </div>
+                </div>
+                <!--                contenteditable="true" div 인데 text 가능하게 해줌-->
+
+
+                <a href="/mypage/editPersonal/withDraw">
+                    <button class="editButton" type="button">탈퇴하기</button>
+                </a>
+            </form>
+        </div>
+    </div>
+
+</div>
+</body>
+</html>

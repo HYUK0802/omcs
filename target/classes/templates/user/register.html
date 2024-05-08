@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>OMCS - 회원가입</title>
+    <link rel="stylesheet" th:href="@{/resources/stylesheets/user/register.css}">
+    <script defer th:src="@{/resources/scripts/user/register.js}"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.12/dist/sweetalert2.all.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.12/dist/sweetalert2.min.css" rel="stylesheet">
+
+</head>
+<body>
+
+<!--<header>-->
+<!--    <h2 class="logo">오마코스</h2>-->
+<!--    <nav class="navigation">-->
+<!--        <a href="#">커뮤니티</a>-->
+<!--        <a href="#">코스만들기</a>-->
+<!--        <a href="#">마이페이지</a>-->
+<!--        <button class="btnLogin-popup">로그인</button>-->
+<!--    </nav>-->
+<!--</header>-->
+
+
+    <div class="wrapper">
+        <div class="form-box login">
+            <h2>회원가입</h2>
+            <form id="registerForm">
+                <section class="step-1" id="step1">
+                    <div class="input-box">
+                        <span class="icon"><ion-icon name="mail"></ion-icon></span>
+                        <input type="text" maxlength="50" name="email">
+                        <label>이메일</label>
+                    </div>
+                    <div class="input-box">
+                        <span class="icon"><ion-icon name="lock-closed"></ion-icon></span>
+                        <input type="password" maxlength="50" name="password">
+                        <label>비밀번호</label>
+                    </div>
+                    <div class="input-box">
+                        <span class="icon"><ion-icon name="lock-closed-outline"></ion-icon></span>
+                    <input type="password" maxlength="50" name="passwordCheck">
+                    <label>비밀번호 확인</label>
+                </div>
+                <div class="input-box">
+                    <span class="icon"><ion-icon name="person"></ion-icon></span>
+                    <input type="text" maxlength="10" name="nickname">
+                    <label>닉네임</label>
+                </div>
+                <div class="input-box">
+                    <span class="icon"><ion-icon name="call"></ion-icon></span>
+                    <input type="text" maxlength="12" name="contact">
+                    <label>전화번호</label>
+                </div>
+                <button type="button" name="contactSend" class="btn send-verification">인증번호 전송</button>
+
+                <div class="input-box verification">
+                    <span class="icon"></span>
+                    <input type="text" maxlength="6" name="contactCode">
+                    <input class="btn send-verification" name="contactVerify" type="button" value="인증번호 확인">
+                    <label>인증번호 확인</label>
+                    <input hidden name="contactSalt" type="hidden">
+
+                </div>
+                <div class="checkboxes">
+                    <label>
+                        <input type="checkbox" name="privacyAgreement" required>
+                        개인정보 수집 동의 약관에 동의합니다 <a href="#">약관보기</a> <br>
+                    </label>
+                    <label>
+                        <input type="checkbox" name="termsAgreement" required>
+                        이용약관에 동의합니다 <a href="#">약관보기</a>
+                    </label>
+                </div>
+
+                <input id="Btn" type="submit" class="btn" name="registerSubmit" value="다음"/>
+                <div class="login-register">
+                    <p>계정이 있으신가? <a href="/user/login" class="register-link" target="_blank">로그인</a></p>
+                </div>
+            </section>
+
+            <section class="section step-2 visible" id="step2">
+                <div class="title-container">
+                    <h3 class="subtitle">회원가입 완료</h3>
+                </div>
+                <div class="content-container">입력하신 이메일로 계정 인증을 위한 링크가 담긴 메일을 전송하였습니다. <br><br>이메일 인증을 완료한 후 로그인 및 서비스 이용이
+                    가능합니다.<br><br>전송된 링크는 1시간 동안 유효함으로 유의해주시기 바랍니다.
+                </div>
+                <div class="button-container">
+                    <input class="_object-button _color-concept"  id="register-finish-btn" type="submit" value="완료">
+                </div>
+            </section>
+
+        </form>
+    </div>
+</div>
+<!--<script defer th:src="@{/resources/scripts/home.js}"></script>-->
+<script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+<script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+</body>
+</html>

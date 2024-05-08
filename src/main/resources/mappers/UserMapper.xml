@@ -1,0 +1,281 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ohmycouse.teampractice.mappers.UserMapper">
+
+
+    <select id="selectUserByEmail"
+            resultType="com.ohmycouse.teampractice.entities.UserEntity">
+        select `email`         as `email`,
+               `password`      as `password`,
+               `nickname`      as `nickname`,
+               `contact`       as `contact`,
+               `status`        as `status`,
+               `admin_flag`    as `isAdmin`,
+               `registered_at` as `registeredAt`
+        from `omcs`.`users`
+        where binary `email` = #{email}
+        limit 1
+    </select>
+    <select id="selectUserByNickname"
+            resultType="com.ohmycouse.teampractice.entities.UserEntity">
+        select `email`         as `email`,
+               `password`      as `password`,
+               `nickname`      as `nickname`,
+               `contact`       as `contact`,
+               `status`        as `status`,
+               `admin_flag`    as `isAdmin`,
+               `registered_at` as `registeredAt`
+        from `omcs`.`users`
+        where binary `nickname` = #{nickname}
+        limit 1
+    </select>
+
+    <select id="selectRegisterContactCodeByContactCodeSalt"
+            resultType="com.ohmycouse.teampractice.entities.RegisterContactCodeEntity">
+        select `index`        as `index`,
+               `contact`      as `contact`,
+               `code`         as `code`,
+               `salt`         as `salt`,
+               `created_at`   as `createdAt`,
+               `expires_at`   as `expiresAt`,
+               `expired_flag` as `isExpired`
+        from `omcs`.`register_contact_codes`
+        where binary `contact` = #{contact}
+          and binary `code` = #{code}
+          and binary `salt` = #{salt}
+        limit 1
+    </select>
+    <select id="selectRegisterEmailCodeByEmailCodeSalt"
+            resultType="com.ohmycouse.teampractice.entities.RegisterEmailCodeEntity">
+        select `index`        as `index`,
+               `email`        as `email`,
+               `code`         as `code`,
+               `salt`         as `salt`,
+               `created_at`   as `createdAt`,
+               `expires_at`   as `expiresAt`,
+               `expired_flag` as `isExpired`
+        from `omcs`.`register_email_codes`
+        where binary `email` = #{email}
+          and binary `code` = #{code}
+          and binary `salt` = #{salt}
+        limit 1
+    </select>
+
+    <insert id="insertUser"
+            parameterType="com.ohmycouse.teampractice.entities.UserEntity">
+        INSERT INTO `omcs`.`users`(`email`, `password`, `nickname`, `contact`,
+                                   `status`, `admin_flag`, `registered_at`)
+            VALUE (
+                   #{email},
+                   #{password},
+                   #{nickname},
+                   #{contact},
+                   #{status},
+                   #{isAdmin},
+                   IFNULL(#{registeredAt}, DEFAULT(`registered_at`))
+            )
+    </insert>
+    <insert id="insertRegisterContactCode"
+            useGeneratedKeys="true"
+            keyColumn="index"
+            keyProperty="index"
+            parameterType="com.ohmycouse.teampractice.entities.RegisterContactCodeEntity">
+        insert into `omcs`.`register_contact_codes`(`contact`, `code`, `salt`, `created_at`, `expires_at`, `expired_flag`)
+        values (#{contact},
+                #{code},
+                #{salt},
+                ifnull(#{createdAt}, default(`created_at`)),
+                #{expiresAt},
+                ifnull(#{isExpired}, default(`expired_flag`)))
+    </insert>
+    <update id="updateRegisterContactCode"
+            parameterType="com.ohmycouse.teampractice.entities.RegisterContactCodeEntity">
+        update `omcs`.`register_contact_codes`
+        set `contact`      = #{contact},
+            `code`         = #{code},
+            `salt`         = #{salt},
+            `created_at`   = #{createdAt},
+            `expires_at`   = #{expiresAt},
+            `expired_flag` = #{isExpired}
+        where `index` = #{index}
+        limit 1
+    </update>
+
+    <insert id="insertRecoverContactCode"
+            useGeneratedKeys="true"
+            keyColumn="index"
+            keyProperty="index"
+            parameterType="com.ohmycouse.teampractice.entities.RecoverContactCodeEntity">
+        INSERT INTO `omcs`.`recover_contact_codes` (`contact`, `code`, `salt`, `created_at`, `expires_at`, `expired_flag`)
+            VALUE (#{contact},
+                   #{code},
+                   #{salt},
+                   IFNULL(#{createdAt}, DEFAULT(`created_at`)),
+                   #{expiresAt},
+                   IFNULL(#{isExpired}, DEFAULT(`expired_flag`)))
+    </insert>
+
+    <insert id="insertRegisterEmailCode"
+            parameterType="com.ohmycouse.teampractice.entities.RegisterEmailCodeEntity">
+        INSERT INTO `omcs`.`register_email_codes` (`email`, `code`, `salt`, `created_at`, `expires_at`, `expired_flag`)
+            VALUE (#{email},
+                   #{code},
+                   #{salt},
+                   IFNULL(#{createdAt}, DEFAULT(`created_at`)),
+                   #{expiresAt},
+                   #{isExpired})
+    </insert>
+
+    <update id="UpdateUser"
+            parameterType="com.ohmycouse.teampractice.entities.UserEntity">
+        UPDATE `omcs`.`users`
+        SET `password` = #{password}
+        WHERE `email` = #{email}
+        LIMIT 1
+    </update>
+    <update id="RegisterUpdateUser"
+            parameterType="com.ohmycouse.teampractice.entities.UserEntity">
+        UPDATE `omcs`.`users`
+        SET `password`      = #{password},
+            `nickname`      = #{nickname},
+            `contact`       = #{contact},
+            `status`        = #{status},
+            `admin_flag`    = #{isAdmin},
+            `registered_at` = #{registeredAt}
+        WHERE `email` = #{email}
+        LIMIT 1
+    </update>
+    <update id="updateRegisterEmailCode"
+            parameterType="com.ohmycouse.teampractice.entities.RegisterEmailCodeEntity">
+        update `omcs`.`register_email_codes`
+        set `email`        = #{email},
+            `code`         = #{code},
+            `salt`         = #{salt},
+            `created_at`   = #{createdAt},
+            `expires_at`   = #{expiresAt},
+            `expired_flag` = #{isExpired}
+        where `index` = #{index}
+        limit 1
+    </update>
+
+    <insert id="insertRecoverEmailCode"
+            parameterType="com.ohmycouse.teampractice.entities.RecoverEmailCodeEntity">
+        INSERT INTO `omcs`.`recover_email_codes`(`email`, `code`, `salt`, `created_at`, `expires_at`, `expired_flag`)
+        VALUES (#{email},
+                #{code},
+                #{salt},
+                IFNULL(#{createdAt}, DEFAULT(`created_at`)),
+                #{expiresAt},
+                IFNULL(#{isExpired}, DEFAULT(`expired_flag`)))
+    </insert>
+
+    <delete id="deleteRecoverEmailCode"
+            parameterType="com.ohmycouse.teampractice.entities.RecoverEmailCodeEntity">
+        DELETE
+        FROM `omcs`.`recover_email_codes`
+        WHERE `index` = #{index}
+        LIMIT 1;
+    </delete>
+
+    <select id="selectRecoverEmailCodeByEmailCodeSalt"
+            parameterType="com.ohmycouse.teampractice.entities.RecoverEmailCodeEntity"
+            resultType="com.ohmycouse.teampractice.entities.RecoverEmailCodeEntity">
+        SELECT `index`        AS `index`,
+               `email`        AS `email`,
+               `code`         AS `code`,
+               `salt`         AS `salt`,
+               `created_at`   AS `createdAt`,
+               `expires_at`   AS `expiresAt`,
+               `expired_flag` AS `isExpired`
+        FROM `omcs`.`recover_email_codes`
+        WHERE BINARY `email` = #{email}
+          AND BINARY `code` = #{code}
+          AND BINARY `salt` = #{salt}
+        LIMIT 1
+    </select>
+
+
+    <update id="updateRecoverEmailCode"
+            parameterType="com.ohmycouse.teampractice.entities.RecoverEmailCodeEntity">
+        UPDATE `omcs`.`recover_email_codes`
+        SET `index`        = #{index},
+            `email`        = #{email},
+            `code`         = #{code},
+            `salt`         = #{salt},
+            `created_at`   = #{createdAt},
+            `expires_at`   = #{expiresAt},
+            `expired_flag` = #{isExpired}
+        WHERE `index` = #{index}
+        LIMIT 1;
+    </update>
+
+    <select id="selectUserByContact"
+            resultType="com.ohmycouse.teampractice.entities.UserEntity">
+        SELECT `email`         AS `email`,
+               `password`      AS `password`,
+               `nickname`      AS `nickname`,
+               `contact`       AS `contact`,
+               `status`        AS `status`,
+               `admin_flag`    AS `isAdmin`,
+               `registered_at` AS `registeredAt`
+        FROM `omcs`.`users`
+        WHERE `contact` = #{contact}
+        LIMIT 1
+    </select>
+    <select id="selectRecoverContactCodeByContactCodeSalt"
+            resultType="com.ohmycouse.teampractice.entities.RecoverContactCodeEntity">
+        SELECT `index`        AS `index`,
+               `contact`      AS `contact`,
+               `code`         AS `code`,
+               `salt`         AS `salt`,
+               `created_at`   AS `createdAt`,
+               `expires_at`   AS `expiresAt`,
+               `expired_flag` AS `isexpired`
+        FROM `omcs`.`recover_contact_codes`
+        WHERE BINARY `contact` = #{contact}
+          AND BINARY `code` = #{code}
+          AND BINARY `salt` = #{salt}
+        LIMIT 1
+    </select>
+
+    <update id="updateRecoverContactCode"
+            parameterType="com.ohmycouse.teampractice.entities.RecoverContactCodeEntity">
+        UPDATE `omcs`.`recover_contact_codes`
+        SET `contact`      = #{contact},
+            `code`         = #{code},
+            `salt`         = #{salt},
+            `created_at`   = #{createdAt},
+            `expires_at`   = #{expiresAt},
+            `expired_flag` = #{isExpired}
+        WHERE `index` = #{index}
+        LIMIT 1
+    </update>
+
+    <select id="selectAdmin"
+            resultType="com.ohmycouse.teampractice.entities.UserEntity">
+        SELECT `email`         AS `email`,
+               `password`      AS `password`,
+               `nickname`      AS `nickname`,
+               `contact`       AS `contact`,
+               `status`        AS `status`,
+               `admin_flag`    AS `isAdmin`,
+               `registered_at` AS `registeredAt`
+        FROM `omcs`.`users`
+    </select>
+    <delete id="deleteUserAdmin"
+            parameterType="com.ohmycouse.teampractice.entities.UserEntity">
+        DELETE
+        FROM `omcs`.`users`
+        WHERE `email` = #{email}
+        LIMIT 1
+    </delete>
+    <update id="updateByUserAdmin"
+    parameterType="com.ohmycouse.teampractice.entities.UserEntity">
+        UPDATE `omcs`.`users`
+        SET `contact` = #{changeContact}
+        WHERE `contact` = #{contact}
+        LIMIT 1
+    </update>
+</mapper>

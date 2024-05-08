@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ohmycouse.teampractice.mappers.CourseMapper">
+
+    <!--    <select id="selectApiDB"-->
+    <!--            resultType="com.ohmycouse.teampractice.entities.CourseEntity">-->
+    <!--        select `addr1`     as `addr1`,-->
+    <!--               `contentId` as `contentId`,-->
+    <!--               `mapX`      as `mapX`,-->
+    <!--               `mapY`      as `mapY`,-->
+    <!--               `title`     as `title`-->
+    <!--        from `teamproject1`.`apiDB`-->
+    <!--    </select>-->
+
+    <select id="selectPlannerByTitle"
+            resultType="com.ohmycouse.teampractice.entities.PlannerEntity">
+        select `index`         as `index`,
+               `email`         as `email`,
+               `created_at`    as `createAt`,
+               `planner_title` as `plannerTitle`,
+               `start_date`    as `startDate`,
+               `end_date`      as `endDate`,
+               `deleted_flag`  as `isDeleted`
+        from `omcs`.`planner`
+        where `planner_title` = #{plannerTitle}
+    </select>
+
+    <insert id="insertPlanner"
+            parameterType="com.ohmycouse.teampractice.entities.PlannerEntity">
+        INSERT INTO `omcs`.`planner`(`email`, `area_code`, `created_at`, `planner_title`,
+                                     `start_date`, `end_date`)
+            VALUE (
+                   #{email},
+                   #{areaCode},
+                   #{createAt},
+                   #{plannerTitle},
+                   #{startDate},
+                   #{endDate}
+            )
+    </insert>
+    <insert id="insertDetailPlan"
+            parameterType="com.ohmycouse.teampractice.entities.DetailPlanEntity">
+        INSERT INTO `omcs`.`detail_plan` (`tour_index`, `day`, `title`, `email`, `date`)
+            VALUE (
+                   #{tourIndex},
+                   #{day},
+                   #{title},
+                   #{email},
+                   #{date}
+            )
+    </insert>
+</mapper>

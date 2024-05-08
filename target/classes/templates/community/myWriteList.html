@@ -1,0 +1,132 @@
+
+<!doctype html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>오마코스</title>
+    <link rel="stylesheet" th:href="@{/resources/stylesheets/community/myWriteList.css}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Nanum+Gothic&family=Noto+Sans+KR:wght@100;300;400;900&family=Roboto:wght@100&display=swap"
+          rel="stylesheet">
+
+    <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.12/dist/sweetalert2.min.css" rel="stylesheet">
+    <script defer th:src="@{/resources/scripts/community/myWriteList.js}"></script>
+
+    <script src="https://kit.fontawesome.com/ba55ade6bc.js" crossorigin="anonymous"></script>
+    <script src="//code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.12/dist/sweetalert2.all.min.js"></script>
+
+
+</head>
+<body>
+<header>
+    <h2 class="logo"><a href="/">
+        <p>O<span>h</span> M<span>y</span> C<span>our</span>S<span>e</span></p>
+    </a></h2>
+    <nav class="navigation">
+        <a href="/community">커뮤니티</a>
+        <a href="/course">코스만들기</a>
+        <a href="/mypage">마이페이지</a>
+    </nav>
+</header>
+<form id="containerForm" class="containerForm">
+
+    <table border="1">
+
+        <tr>
+            <th>글 번호</th>
+            <th>제목</th>
+            <th>내용</th>
+            <th>이미지</th>
+            <th></th>
+            <th></th>
+        </tr>
+        <tr th:each="article : ${articles}">
+            <input type="hidden" name="index" th:value="${article.getIndex()}">
+            <th:block th:if="${article.getEmail()} == ${loggedInUser.getEmail()}">
+                <td th:text="${article.getIndex()}"></td>
+                <td th:text="${article.getTitle()}">1</td>
+                <td th:utext="${article.getFirstText()}">username</td>
+                <td th:utext="${article.getFirstImage()}" style="border: none"></td>
+                <td>
+                    <a class="delete" href="#" rel="delete">삭제</a>
+                </td>
+                <td>
+                    <a class="modify" th:href="@{/community/editWrite?index={index} (index=${article.getIndex()})}" rel="modify">수정</a>
+                </td>
+            </th:block>
+        </tr>
+    </table>
+
+</form>
+<!--<section id="footer">-->
+<!--    <div class="footer">-->
+<!--        <div class="footer-con">-->
+<!--            <span>SNS</span>-->
+<!--            <a>이용약관 / 개인정보처리방침</a>-->
+<!--            <span>대구 중구 중앙대로 366 9층, 10층</span>-->
+<!--            <span>yeo328@kakao.com</span>-->
+<!--            <span>tig05205@nate.com</span>-->
+<!--            <span>omcs Co., Ltd All right reserved.</span>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--</section>-->
+
+<div class="footer">
+    <div class="footer-con">
+        <div class="box left">
+            <nav class="site-map">
+                <ul class="foot-menu">
+                    <li class="item-title">OMCS 서비스</li>
+                    <li class="item">
+                        <a href="/notice" class="link">공지사항</a>
+                    </li>
+                    <li class="item">
+                        <a href="/community" class="link">커뮤니티</a>
+                    </li>
+                    <li class="item">
+                        <a href="/course" class="link">코스 만들기</a>
+                    </li>
+                </ul>
+                <ul class="foot-menu">
+                    <li class="item-title">OMCS 기업정보</li>
+                    <li class="item">
+                        <a href="#" class="link">채용정보</a>
+                    </li>
+                    <li class="item">
+                        <a href="#" class="link">파트너십</a>
+                    </li>
+                    <li class="item">
+                        <a href="#" class="link">제휴 문의</a>
+                    </li>
+                </ul>
+                <ul class="foot-menu">
+                    <li class="item-title">법적 고지</li>
+                    <li class="item">
+                        <a href="#" class="link">개인정보처리법</a>
+                    </li>
+                    <li class="item">
+                        <a href="#" class="link">이용 약관</a>
+                    </li>
+                    <li class="item">
+                        <a href="#" class="link">법적 고지</a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+        <div class="box right">
+            <a href="/admin">관리자페이지</a>
+            <a>이용약관 / 개인정보처리방침</a>
+            <span>대구 중구 중앙대로 366 9층, 10층</span>
+            <span>yeo328@kakao.com</span>
+            <span>omcs Co., Ltd All right reserved.</span>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

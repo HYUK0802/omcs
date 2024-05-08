@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <link rel="stylesheet" th:href="@{/resources/stylesheets/admin/admin.css}">
+    <script defer th:src="@{/resources/scripts/admin/admin.js}"></script>
+
+    <meta charset="UTF-8">
+    <title>관리자전용</title>
+</head>
+<body>
+<div class="wrap">
+
+    <div class="head">
+        <div class="head-con">
+            <div class="logo">
+                <a href="/">
+                    <p>O<span>h</span> M<span>y</span> C<span>our</span>S<span>e</span></p>
+                </a>
+            </div>
+
+            <nav class="nav">
+                <ul class="main-menu">
+                    <li>
+                        <a href="/course">코스만들기</a>
+                    </li>
+                    <li>
+                        <a href="/community">커뮤니티</a>
+                    </li>
+                    <li>
+                        <a href="/notice">공지사항</a>
+                    </li>
+                    <li class="userLi" th:if="${session.user != null}">
+                        <a href="/mypage">마이페이지</a>
+                    </li>
+                    <li data-action="showLogin" th:if="${session.user == null}">
+                        <a href="/user/login" id="showLogin">로그인</a>
+                    </li>
+                    <li data-action="shouLogout" th:if="${session.user != null}">
+                        <a href="/user/logout" id="showLogout">로그아웃</a>
+                    </li>
+                </ul>
+
+            </nav>
+        </div>
+
+    </div>
+
+    <h2 class="title"> 관리자전용 OMCS 회원관리 </h2>
+    <div class="content">
+        <th:block th:if="${session.user == null || session.user.getAdmin() == false}">
+            <div style="text-align: center; padding-top: 10%;">
+                <div style="margin-bottom: 4%;">
+                    <img style="width: 100px" th:src="@{/resources/images/errorGlobe.png}" alt="">
+                </div>
+
+                <span>관리자 권한 없음</span>
+                <!-- 로그아웃 상태에서 처리할 내용을 여기에 작성 -->
+            </div>
+        </th:block>
+        <th:block th:if="${session.user != null}">
+            <table th:if="${session.user.getAdmin() == true}">
+                <thead>
+                <tr>
+                    <!--          <th class="table-index"> No. </th>-->
+                    <th class="table-email">Email</th>
+                    <th class="table-nickname">닉네임</th>
+                    <th class="table-admin">관리자</th>
+                    <th class="table-created">가입일자</th>
+                    <th class="table-contact">전화번호</th>
+                    <th class="user-patch">연락처수정</th>
+                    <th class="user-delete">계정삭제</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="userList : ${userList}">
+                    <!--            <td>1</td>-->
+                    <td th:text="${userList.email}">example@email.com</td>
+                    <td th:text="${userList.nickname}">닉네임</td>
+                    <td th:text="${userList.admin}">관리자</td>
+                    <td th:text="${#dates.format(userList.registeredAt, 'yyyy-MM-dd')}">2023-08-09</td>
+                    <td th:text="${userList.contact}">전화번호</td>
+                    <td>
+                        <button class="userPatchBtn" th:data-contact="${userList.contact}">연락처 수정</button>
+                    </td>
+
+                    <td>
+                        <button class="userDeleteBtn" th:data-email="${userList.email}">계정삭제</button>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </th:block>
+    </div>
+
+</div>
+</body>
+</html>

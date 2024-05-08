@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>OMCS - 커뮤니티 상세페이지</title>
+    <link rel="stylesheet" th:href="@{/resources/stylesheets/community/communityDetail.css}">
+    <script defer th:inline="javascript" th:src="@{/resources/scripts/community/communityDetail.js}"></script>
+    <script src="https://kit.fontawesome.com/df5bb2a201.js" crossorigin="anonymous"></script>
+</head>
+<body>
+<div class="head">
+    <div class="head-con">
+        <div class="logo">
+            <a href="/">
+                <p>O<span>h</span> M<span>y</span> C<span>our</span>S<span>e</span></p>
+            </a>
+        </div>
+
+        <nav class="nav">
+            <ul class="main-menu">
+                <li>
+                    <a href="/course">코스만들기</a>
+                </li>
+                <li>
+                    <a href="/community">커뮤니티</a>
+                </li>
+                <li>
+                    <a href="/notice">공지사항</a>
+                </li>
+                <li class="userLi" th:if="${session.user != null}">
+                    <a href="/mypage">마이페이지</a>
+                    <!--                    <a href="#"><img src="./icons/icons8-user-48.png" alt="마이페이지"></a>-->
+                    <ul class="sub-menu">
+                        <!-- <li><a href="#">내여행코스</a></li>
+                        <li><a href="#">비밀번호변경</a></li>
+                        <li><a href="#">찜리스트</a></li>
+                        <li><a href="#">??</a></li> -->
+                    </ul>
+                </li>
+                <li data-action="showLogin" th:if="${session.user == null}">
+                    <a href="/user/login" id="showLogin">로그인</a>
+                </li>
+                <li data-action="shouLogout" th:if="${session.user != null}">
+                    <a href="/user/logout" id="showLogout">로그아웃</a>
+                </li>
+            </ul>
+
+        </nav>
+    </div>
+</div>
+<form id="communityForm">
+    <div class="body-container">
+        <div class="title-container">
+            <h2 class="post-title" th:text="${article.getTitle()}">게시글 제목</h2>
+            <h3 class="nickname" th:text="${article.getNickname()}">닉네임</h3>
+            <h3 class="post-date" th:text="${#dates.format(article.getCreatedAt(), 'yyyy-MM-dd HH:mm:ss')}">
+                2023-06-26</h3>
+        </div>
+        <div class="content-container" th:utext="${article.getContent()}">
+        </div>
+    </div>
+    <div class="dateView">
+        <div class="like-container">
+            <label class="heart-container">
+                <i id="like" class="fa-solid fa-heart fa-xl"></i>
+            </label>
+            <label class="count-container">
+                <b class="like-count" th:text="${article.getLikeCount()}"></b><span>명이 좋아합니다.</span>
+            </label>
+        </div>
+        <span class="view">조회수 <span th:text="${article.getView()}"></span>회 </span>
+    </div>
+</form>
+<div class="comment-container">
+    <table>
+        <tbody>
+        <tr>
+            <td>
+                <label class="label">
+                    <a href="#" id="callComment" class="comment-title">댓글</a>
+                </label>
+            </td>
+        </tr>
+        </tbody>
+        <tbody id="commentContainer">
+        </tbody>
+        <tbody>
+        <tr>
+            <td colspan="5">
+                <form id="commentForm">
+                    <div class="write-container">
+                        <input name="articleIndex" type="hidden" th:value="${article.getIndex()}">
+                        <label class="label">
+                            <input class="comment" name="content" placeholder="댓글을 입력해 주세요." type="text">
+                            <input class="button" type="submit" value="작성">
+                        </label>
+                    </div>
+                </form>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>

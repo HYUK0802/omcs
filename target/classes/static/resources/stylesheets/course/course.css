@@ -1,0 +1,640 @@
+* {
+    padding: 0;
+    margin: 0;
+}
+
+ul {
+    list-style-type: none;
+}
+
+a {
+    text-decoration: none;
+    display: block;
+}
+
+li {
+    display: inline-block;
+}
+input {
+    appearance: unset;
+    background-color: unset;
+    box-sizing: border-box;
+    color: inherit;
+    font: inherit;
+    margin: unset;
+    outline: none;
+    padding: unset;
+}
+
+html, body {
+    width: 100%;
+    height: 100%;
+    /*overflow-y: auto;*/
+}
+.wrap {
+    display: grid;
+    grid-template-columns: 100%;
+    grid-template-rows: 60px 1000px ;
+    height: 100%;
+
+    grid-template-areas:
+"head"
+"contents";
+}
+
+.head {
+    padding-top: 15px;
+    padding-bottom: 20px;
+    grid-area: head;
+    background-color: #ffffff;
+    position: fixed;
+    z-index: 9;
+    width: 100%;
+}
+#contents {
+    margin-top: 30px;
+
+    /*background-color: orange;*/
+
+    grid-area: contents;
+    width:100%;
+    /*height:350px;*/
+    height: 100%;
+    display: grid;
+    grid-template-columns: 20% 23% 57% ;
+    grid-template-rows: 100%;
+    grid-template-areas: "plan comment kakao-map";
+}
+#plan{
+    display: inline-block;
+    grid-area: plan;
+    /*background-color: darkgrey;*/
+
+    height: 100%;
+    width: 100%;
+    border-right: 0.0625rem solid #d5d5d5;
+    margin-right: 20px;
+}
+#recommend{
+    grid-area: comment;
+    /*background-color: cornflowerblue;*/
+
+    height: 100%;
+    width: 100%;
+    margin-left: 10px;
+
+}
+.recommend-button{
+    background-color: #e9e1f5;
+    border-radius: 3px;
+    /*color: #ffffff;*/
+    border: none;
+    padding: 3px;
+}
+.recommend-button:hover{
+    cursor: pointer;
+    background-color: #D6BBFF;
+    color:#ffffff
+}
+
+
+#kakao-map{
+    grid-area: kakao-map;
+    z-index: 1;
+
+    padding-left: 10px;
+    height: 100%;
+}
+
+#map{
+    width:100%;
+    height:100%;
+}
+
+
+/*로고*/
+.logo > a > p {
+    display: inline-block;
+    text-align: center;
+    color: #bb8cff;
+    font-size: 35px;
+    font-weight: bold;
+    margin-top: 4px;
+    margin-left: 50px;
+}
+.logo {
+    display: inline-block;
+}
+.logo>a:nth-child(2) {
+    color: #ffffff;
+}
+.logo>a>p{
+    display: inline-block;
+    font-style: italic;
+
+}
+.logo>a>p>span{
+    color: black;
+    font-size: 23px;
+    font-weight: normal;
+}
+
+/*head 메뉴바*/
+
+.nav {
+    /*background-color: cornflowerblue;*/
+    /*height: 100px;*/
+    display: inline-block;
+    float: right;
+    padding-right: 30px;
+}
+
+.main-menu {
+    /*display: inline-block;*/
+    float: right;
+    text-align: center;
+}
+
+.main-menu > li {
+    /*width: 100px;*/
+    /*height: 100%;*/
+    /*height: 20px;*/
+    /*background-color: bisque;*/
+    /*padding: 10px;*/
+}
+.main-menu > li > a {
+    display: inline-block;
+    color: black;
+    width: 100px;
+    height: 17px;
+    padding: 10px;
+    /*padding: 20px;*/
+    /*padding: 13px;*/
+}
+.main-menu > li:hover {
+    background-color: #D6BBFF;
+    border-radius: 8px;
+}
+.main-menu > li >a:hover {
+    color: #ffffff;
+}
+
+
+
+/* 일정 생성 */
+.address-container > .text + .text {
+    margin-left: 0.375rem;
+}
+
+.address-container {
+    background-color: #eeeeee;
+    border-radius: 0.25rem;
+    margin: 0.5rem 1.25rem 1.25rem 1.25rem;
+    padding: 0.75rem 1rem;
+
+    align-items: center;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+}
+
+.address-container > .text {
+    color: #424242;
+    font-size: 1.125rem;
+    font-weight: 600;
+}
+.line{
+    border-bottom: 0.0625rem solid #d5d5d5;
+}
+.plan-day-btn{
+    text-align: center;
+    padding: 12px;
+}
+.plan-day-btn > button{
+    margin: 5px;
+    padding: 10px;
+    border: none;
+    border-radius: 7px;
+    box-shadow: rgba(0, 0, 0, 0.12) 0px 6px 16px;
+    /*background-color: #ffffff;*/
+}
+.plan-day-btn > button:hover{
+    background-color: #D6BBFF;
+    color: #ffffff;
+    cursor: pointer;
+}
+
+
+/* 여행지 추천 */
+.map-DB-list{
+    height: 100%;
+    width: 100%;
+    overflow: scroll;
+}
+
+#list {
+    width: 100%;
+    border-right: 0.0625rem solid #eeeeee;
+    box-sizing: border-box;
+
+    align-items: stretch;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+}
+
+#list > .search-form {
+    padding: 1.25rem 1.25rem 0 1.25rem;
+
+    align-items: stretch;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+}
+
+#list > .search-form > .label {
+    position: relative;
+}
+
+#list > .search-form > .label > .icon {
+    top: 50%;
+    left: 0.75rem;
+    width: 1.5rem;
+    pointer-events: none;
+    position: absolute;
+    transform: translateY(-50%);
+}
+
+#list > .search-form > .label > .input {
+    width: 100%;
+    /*background-color: #fafafa;*/
+    border: 0.02rem solid #000000;
+    border-radius: 0.25rem;
+    box-sizing: border-box;
+    color: #212121;
+    font: inherit;
+    outline: none;
+    padding: 0.625rem 0.75rem 0.625rem 2.5rem;
+}
+
+#list > .list {
+    border-top: 0.0625rem solid #e0e0e0;
+    overflow: hidden scroll;
+
+    align-items: stretch;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+}
+
+
+
+/* 추천 여행지 */
+
+.item {
+    margin: 3%;
+    cursor: pointer;
+    /*padding: 1.1rem 0.875rem 1.1rem 1.25rem;*/
+
+    align-items: stretch;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+
+    box-shadow: 0 0 0.5rem 0.0625rem #e0d4d4;
+    border-radius: 8px;
+    overflow:scroll;
+}
+
+.item:hover {
+    background-color: #eeeeee;
+}
+
+.spec-container {
+    flex: 1;
+    align-items: flex-start;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+
+    margin-top: 5%;
+    margin-left: 3%;
+}
+
+.spec-container > * + * {
+    margin-top: 0.25rem;
+}
+
+.spec-container > .name-container {
+    margin-bottom: 0.25rem;
+
+    align-items: center;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+}
+
+> .name-container > .name {
+    color: #0288d1;
+    font-size: 1.2rem;
+    font-weight: 500;
+    margin-right: 0.5rem;
+}
+
+
+
+
+.item > .image-container {
+    width: 4.5rem;
+    height: 4.5rem;
+    border-radius: 0.25rem;
+    overflow: hidden;
+    position: relative;
+}
+
+.item > .image-container > .image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.item > .image-container > .count {
+    right: 0;
+    bottom: 0;
+    background-color: #212121a0;
+    border-radius: 0.25rem;
+    color: #fafafa;
+    font-size: 0.8rem;
+    padding: 0.2rem 0.375rem;
+    pointer-events: none;
+    position: absolute;
+}
+
+#plannerForm {
+    top: 50%;
+    left: 50%;
+    max-width: calc(100vw - 2rem);
+    max-height: calc(100vh - 2rem);
+    background-color: #fafafa;
+    box-sizing: border-box;
+    border-radius: 0.5rem;
+    opacity: 0;
+    padding: 2rem;
+    position: fixed;
+    pointer-events: none;
+    z-index: 9;
+    transform: scale(95%) translate(-50%, -50%);
+    transform-origin: top left;
+    transition-duration: 250ms;
+    transition-property: opacity;
+    transition-timing-function: ease;
+
+    align-items: stretch;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+#plannerForm.visible {
+    opacity: 1;
+    pointer-events: all;
+}
+
+#plannerForm > .plan-title {
+    font-size: 1.4rem;
+    font-weight: 700;
+    padding-bottom: 1rem;
+
+    align-items: center;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+#plannerForm > .planner-container {
+    border-radius: 1rem;
+    box-shadow: rgba(0, 0, 0, 0.12) 0px 6px 16px;
+    padding: 0.5rem;
+
+    align-items: stretch;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+}
+
+#plannerForm > .planner-container > .city-container {
+    border-bottom: 0.075rem solid #e0e0e0;
+    padding: 1.5rem;
+}
+
+#plannerForm > .planner-container > .city-container > .city-title {
+    padding-bottom: 0.5rem;
+}
+
+#plannerForm > .planner-container > .date-container {
+    border-bottom: 0.075rem solid #e0e0e0;
+    padding: 1.5rem;
+}
+
+#plannerForm > .planner-container > .date-container > .date-title {
+    padding-bottom: 0.5rem;
+}
+
+#plannerForm > .planner-container > .date-container > .start-date {
+    border-radius: 0.75rem;
+    padding: 0.25rem;
+}
+
+#plannerForm > .planner-container > .date-container > .end-date {
+    border-radius: 0.75rem;
+    padding: 0.25rem;
+}
+
+#plannerForm > .planner-container > .title-container {
+    border-bottom: 0.075rem solid #e0e0e0;
+    padding: 1.5rem;
+}
+
+#plannerForm > .planner-container > .title-container > .title-title {
+    padding-bottom: 0.5rem;
+}
+
+#plannerForm > .planner-container > .title-container > .plan-name {
+    border-radius: 0.5rem;
+    width: 100%;
+    font-size: 0.9rem;
+    padding: 0.25rem;
+}
+
+#plannerForm > .planner-container > .button {
+    width: 87%;
+    height: 2rem;
+    background-color: #d6BBFF;
+    border: none;
+    border-radius: 0.5rem;
+    color: #ffffff;
+    cursor: pointer;
+    padding: 0.25rem 0.5rem;
+    margin: 1rem 0 0.5rem 1.5rem;
+}
+
+#plannerForm > .planner-container > .button:hover {
+    color: #10151a;
+}
+
+#plannerClose {
+    top: 1%;
+    right: 1%;
+    width: 2rem;
+    height: 2rem;
+    /*background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAYAAAAeP4ixAAAACXBIWXMAAAsTAAALEwEAmpwYAAABHUlEQVR4nO3ZXwqDMAwG8J5ik11xO48P/cRAzzRwO83G/oGDTWxNk7T0e/JFyQ+1TahzLS0tLdWEvD8SUadeB1H3qCXp5hE4EXAbgUkTQ0Tds4ZXLafoB4S+343A+f2A6zAMByccAPtPDeT9JbkGTQy4EJoYcCM0MMiFkMQgN0ICI4bIiRFH5MCoITgx6ggOjBnEFow5RArGLCIGYx6xBlMMYglTHOLPDDHNry0Maslvprg3Mc/X56Q4nG1KFZ8WfvzYFsbmqCytTsVgsGKJNY9BxD5hFoOEzc4cBht2bDMYMLQd6hgw9k5qGGRoAMUxyNjFimEg0IqH3BjJeSLkwmgMRYEboznZBS6MhfE0cGCqOXqr5jC0paWlxVnMHRZHTPYUtCbGAAAAAElFTkSuQmCC");*/
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: 62.5%;
+    /*cursor: pointer;*/
+    position: absolute;
+    z-index: 2;
+}
+h3 {
+    margin-top: 10px;
+    margin-left: 20px;
+}
+
+
+#city {
+    width: 10rem;
+    border-radius: 0.5rem;
+    padding: 0.15rem;
+    margin: unset;
+}
+
+#cover {
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    backdrop-filter: blur(0.25rem);
+    background-color: #21212160;
+    opacity: 0;
+    pointer-events: none;
+    position: fixed;
+    transition-duration: 250ms;
+    transition-property: opacity;
+    transition-timing-function: ease;
+    z-index: 8;
+}
+
+#cover.visible {
+    opacity: 1;
+    pointer-events: all;
+}
+
+
+/*.day-btn-selected {*/
+/*    background-color: #ffd700;*/
+/*    color: #000;*/
+/*}*/
+
+/*.selected-day-button {*/
+/*    !* 효과를 원하는 스타일을 지정합니다. 예시로 배경색을 변경해보겠습니다. *!*/
+/*    background-color: yellow;*/
+/*}*/
+.submit-dayForm-button {
+    width: 87%;
+    height: 2rem;
+    background-color: #d6BBFF;
+    border: none;
+    border-radius: 0.5rem;
+    color: #ffffff;
+    cursor: pointer;
+    padding: 0.25rem 0.5rem;
+    margin: 1rem 0 0.5rem 1.5rem;
+}
+.delete-hide {
+    display: none;
+}
+.delete-show {
+    display: inline;
+}
+
+
+/* 버튼 색 바꾸기 */
+.grey-btn{
+    background-color: grey;
+}
+
+.cursor-none{
+    cursor: default !important;
+}
+
+@media screen and (max-width: 55rem) {
+    .wrap > #contents {
+        height: 150%;
+    }
+}
+
+@media screen and (max-width: 600px) {
+    .nav {
+        display: inline-block;
+        float: right;
+        padding-right: 0;
+    }
+
+    .logo > a > p {
+        display: inline-block;
+        text-align: center;
+        color: #bb8cff;
+        font-size: 35px;
+        font-weight: bold;
+        margin-top: 4px;
+        margin-left: 0;
+    }
+
+    .head > .head-con {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .main-menu > li > a {
+        display: inline-block;
+        color: black;
+        width: 100px;
+        height: 17px;
+        padding: 5px;
+    }
+}
+
+@media screen and (min-width: 601px) and (max-width: 768px) {
+    .nav {
+        display: inline-block;
+        float: right;
+        padding-right: 0;
+    }
+
+    .logo > a > p {
+        display: inline-block;
+        text-align: center;
+        color: #bb8cff;
+        font-size: 35px;
+        font-weight: bold;
+        margin-top: 4px;
+        margin-left: 0;
+    }
+
+    .head > .head-con {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .main-menu > li > a {
+        display: inline-block;
+        color: black;
+        width: 100px;
+        height: 17px;
+        padding: 5px;
+    }
+}

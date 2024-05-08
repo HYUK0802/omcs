@@ -1,0 +1,326 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ohmycouse.teampractice.mappers.CommunityMapper">
+    <insert id="insertArticle"
+            useGeneratedKeys="true"
+            keyProperty="index"
+            keyColumn="index"
+            parameterType="com.ohmycouse.teampractice.entities.ArticlesEntity">
+        INSERT INTO `omcs`.`articles` (`email`, `nickname`, `title`, `content`, `view`, `created_at`, `deleted_flag`,
+                                       `client_ip`,
+                                       `client_ua`)
+        values (#{email},
+                #{nickname},
+                #{title},
+                #{content},
+                #{view},
+                IFNULL(#{createdAt}, DEFAULT(`created_at`)),
+                #{isDeleted},
+                #{clientIp},
+                #{clientUa})
+    </insert>
+
+    <insert id="insertComment"
+            useGeneratedKeys="true"
+            keyColumn="index"
+            keyProperty="index"
+            parameterType="com.ohmycouse.teampractice.entities.CommentEntity">
+        INSERT INTO `omcs`.`article_comments` (`article_index`, `comment_index`, `content`, `nickname`, `deleted_flag`, `created_at`, `client_ip`, `client_ua`)
+        VALUES (#{articleIndex},
+                #{commentIndex},
+                #{content},
+                #{nickname},
+                #{isDeleted},
+                IFNULL(#{createdAt}, DEFAULT(`created_at`)),
+                #{clientIp},
+                #{clientUa})
+    </insert>
+
+    <insert id="insertImage"
+            useGeneratedKeys="true"
+            keyProperty="index"
+            keyColumn="index"
+            parameterType="com.ohmycouse.teampractice.entities.ImageEntity">
+        INSERT INTO `omcs`.`images` (`email`, `name`, `size`, `content_type`, `data`, `created_at`, `client_ip`,
+                                     `client_ua`)
+        VALUES (#{email},
+                #{name},
+                #{size},
+                #{contentType},
+                #{data},
+                IFNULL(#{createdAt}, DEFAULT(`created_at`)),
+                #{clientIp},
+                #{clientUa})
+    </insert>
+
+    <insert id="insertLike"
+            useGeneratedKeys="true"
+            keyProperty="index"
+            keyColumn="index"
+            parameterType="com.ohmycouse.teampractice.entities.LikeEntity">
+        INSERT INTO `omcs`.`likes` (article_index, nickname)
+            VALUES(#{articleIndex},
+                   #{nickname})
+    </insert>
+
+    <select id="selectArticleByIndex"
+            resultType="com.ohmycouse.teampractice.entities.ArticlesEntity">
+        SELECT `index`        AS `index`,
+               `nickname`     AS `nickname`,
+               `email`        AS `email`,
+               `title`        AS `title`,
+               `content`      AS `content`,
+               `view`         AS `view`,
+               `created_at`   AS `createdAt`,
+               `deleted_flag` AS `isDeleted`,
+               `client_ip`    AS `clientIp`,
+               `client_ua`    AS `clientUa`
+        FROM `omcs`.`articles`
+        WHERE `index` = #{index}
+    </select>
+
+    <select id="selectArticleVoByIndex"
+            resultType="com.ohmycouse.teampractice.vos.ArticleVo">
+        SELECT `article`.`index`             AS `index`,
+               `article`.`nickname`          AS `nickname`,
+               `article`.`email`             AS `email`,
+               `article`.`title`             AS `title`,
+               `article`.`content`           AS `content`,
+               `article`.`view`              AS `view`,
+               `article`.`created_at`        AS `createdAt`,
+               `article`.`deleted_flag`      AS `isDeleted`,
+               `article`.`client_ip`         AS `clientIp`,
+               `article`.`client_ua`         AS `clientUa`,
+               COUNT(`like`.`article_index`) AS `likeCount`
+        FROM `omcs`.`articles` AS `article`
+                 left join `omcs`.`likes` AS `like` on `article`.`index` = `like`.`article_index`
+        WHERE `article`.`index` = #{index}
+        GROUP BY `article`.`index`
+    </select>
+
+    <select id="selectComment"
+            resultType="com.ohmycouse.teampractice.entities.CommentEntity">
+        SELECT `index`         AS `index`,
+               `article_index` AS `articleIndex`,
+               `comment_index` AS `commentIndex`,
+               `content`       AS `content`,
+               `nickname`      AS `nickname`,
+               `deleted_flag`  AS `isDeleted`,
+               `created_at`    AS `createdAt`,
+               `client_ip`     AS `clientIp`,
+               `client_ua`     AS `clientUa`
+        FROM `omcs`.`article_comments`
+        WHERE `index` = #{index}
+        LIMIT 1
+    </select>
+
+    <select id="selectCommentsByArticleIndex"
+            resultType="com.ohmycouse.teampractice.entities.CommentEntity">
+        SELECT `index`         AS `index`,
+               `article_index` AS `articleIndex`,
+               `comment_index` AS `commentIndex`,
+               `content`       AS `content`,
+               `nickname`      AS `nickname`,
+               `deleted_flag`  AS `isDeleted`,
+               `created_at`    AS `createdAt`,
+               `client_ip`     AS `clientIp`,
+               `client_ua`     AS `clientUa`
+        FROM `omcs`.`article_comments`
+        WHERE `article_index` = #{articleIndex}
+        ORDER BY `index`
+    </select>
+
+    <select id="findArticle"
+            resultType="com.ohmycouse.teampractice.entities.ArticlesEntity">
+        SELECT `index`        AS `index`,
+               `nickname`     AS `nickname`,
+               `email`        AS `email`,
+               `title`        AS `title`,
+               `content`      AS `content`,
+               `view`         AS `view`,
+               `created_at`   AS `createdAt`,
+               `deleted_flag` AS `isDeleted`,
+               `client_ip`    AS `clientIp`,
+               `client_ua`    AS `clientUa`
+        FROM `omcs`.`articles`
+    </select>
+    <select id="findArticleByEmail"
+            resultType="com.ohmycouse.teampractice.entities.ArticlesEntity">
+        SELECT `index`        AS `index`,
+               `nickname`     AS `nickname`,
+               `email`        AS `email`,
+               `title`        AS `title`,
+               `content`      AS `content`,
+               `view`         AS `view`,
+               `created_at`   AS `createdAt`,
+               `deleted_flag` AS `isDeleted`,
+               `client_ip`    AS `clientIp`,
+               `client_ua`    AS `clientUa`
+        FROM `omcs`.`articles`
+        LIMIT 1
+    </select>
+
+    <select id="selectImage"
+            resultType="com.ohmycouse.teampractice.entities.ImageEntity">
+        SELECT `index`        AS `index`,
+               `email`        AS `email`,
+               `name`         AS `name`,
+               `size`         AS `size`,
+               `content_type` AS `contentType`,
+               `data`         AS `data`,
+               `created_at`   AS `createdAt`,
+               `client_ip`    AS `clientIp`,
+               `client_ua`    AS `clientUa`
+        FROM `omcs`.`images`
+        WHERE BINARY `index` = ${index}
+        LIMIT 1;
+    </select>
+
+    <select id="selectLikesByArticleIndex"
+            resultType="com.ohmycouse.teampractice.entities.LikeEntity">
+        SELECT COUNT(`article_index`) AS `likes`
+        FROM `omcs`.`likes`
+        WHERE BINARY `article_index` = #{articleIndex}
+        GROUP BY `article_index`
+    </select>
+
+    <update id="updateComment"
+            parameterType="com.ohmycouse.teampractice.entities.CommentEntity">
+        UPDATE `omcs`.`article_comments`
+        SET `article_index` = #{articleIndex},
+            `comment_index` = #{commentIndex},
+            `content` = #{content},
+            `nickname` = #{nickname},
+            `deleted_flag` = #{isDeleted},
+            `created_at` = #{createdAt},
+            `client_ip` = #{clientIp},
+            `client_ua` = #{clientUa}
+        WHERE `index` = #{index}
+        LIMIT 1
+    </update>
+
+    <update id="updateArticle"
+            parameterType="com.ohmycouse.teampractice.entities.ArticlesEntity">
+        UPDATE `omcs`.`articles`
+        SET `title`        = #{title},
+            `nickname`     = #{nickname},
+            `email`        = #{email},
+            `content`      = #{content},
+            `view`         = #{view},
+            `created_at`   = #{createdAt},
+            `deleted_flag` = #{isDeleted},
+            `client_ip`    = #{clientIp},
+            `client_ua`    = #{clientUa}
+        WHERE `index` = #{index}
+        LIMIT 1
+    </update>
+
+    <update id="updateByIndex"
+            parameterType="com.ohmycouse.teampractice.entities.ArticlesEntity">
+        UPDATE `omcs`.`articles`
+        SET `title`   = #{title},
+            `content` = #{content}
+        WHERE `index` = #{index}
+    </update>
+
+    <select id="selectUserByEmail"
+            resultType="com.ohmycouse.teampractice.entities.UserEntity">
+        SELECT `email`         AS `email`,
+               `password`      AS `password`,
+               `nickname`      AS `nickname`,
+               `contact`       AS `contact`,
+               `status`        AS `status`,
+               `admin_flag`    AS `isAdmin`,
+               `registered_at` AS `registeredAt`
+        FROM `omcs`.`users`
+        WHERE BINARY `email` = #{email}
+        LIMIT 1;
+    </select>
+
+    <delete id="deleteByIndex">
+        DELETE
+        FROM `omcs`.`articles`
+        WHERE `index` = #{index}
+        LIMIT 1
+    </delete>
+
+    <select id="articleOrderByCreatedAt"
+            resultType="com.ohmycouse.teampractice.entities.ArticlesEntity">
+        SELECT `index`        AS `index`,
+               `email`        AS `email`,
+               `nickname`     AS `nickname`,
+               `title`        AS `title`,
+               `content`      AS `content`,
+               `view`         AS `view`,
+               `created_at`   AS `createdAt`,
+               `deleted_flag` AS `isDeleted`,
+               `client_ip`    AS `clientIp`,
+               `client_ua`    AS `clientUa`
+        FROM `omcs`.`articles`
+        ORDER BY `createdAt` DESC;
+    </select>
+
+
+    <select id="articleOrderByView"
+            resultType="com.ohmycouse.teampractice.entities.ArticlesEntity">
+        SELECT `index`        AS `index`,
+               `email`        AS `email`,
+               `nickname`     AS `nickname`,
+               `title`        AS `title`,
+               `content`      AS `content`,
+               `view`         AS `view`,
+               `created_at`   AS `createdAt`,
+               `deleted_flag` AS `isDeleted`,
+               `client_ip`    AS `clientIp`,
+               `client_ua`    AS `clientUa`
+        FROM `omcs`.`articles`
+        ORDER BY `view` DESC;
+    </select>
+
+    <select id="selectCount"
+            resultType="int">
+        SELECT COUNT(0) AS `count`
+        FROM `omcs`.`articles`
+        <if test='searchCriterion.equals("title")'>
+            WHERE `title` LIKE CONCAT('%', #{searchQuery}, '%')
+        </if>
+        <if test='searchCriterion.equals("nickname")'>
+            WHERE BINARY `nickname` = #{searchQuery}
+        </if>
+    </select>
+
+    <select id="selectByPage"
+            resultType="com.ohmycouse.teampractice.entities.ArticlesEntity">
+        SELECT `index` AS `index`,
+        `email` AS `email`,
+        `nickname` AS `nickname`,
+        `title` AS `title`,
+        `content` AS `content`,
+        `view` AS `view`,
+        `created_at` AS `createdAt`,
+        `deleted_flag` AS `isDeleted`,
+        `client_ip` AS `clientIp`,
+        `client_ua` AS `clientUa`
+
+        FROM `omcs`.`articles`
+        <where>
+            <if test="searchCriterion.equals('title')">
+                AND `title` LIKE CONCAT('%', #{searchQuery}, '%')
+            </if>
+            <if test="searchCriterion.equals('nickname')">
+                AND BINARY `nickname` = #{searchQuery}
+            </if>
+        </where>
+        <if test="sort.equals('latest')">
+            ORDER BY `createdAt` DESC
+        </if>
+        <if test="sort.equals('view')">
+            ORDER BY `view` DESC
+        </if>
+        LIMIT #{pagingModel.pageCount} OFFSET #{pagingModel.offset}
+    </select>
+
+
+</mapper>

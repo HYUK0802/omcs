@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ohmycouse.teampractice.mappers.PlaceMapper">
+    <select id="selectPlaceByContentId"
+            resultType="com.ohmycouse.teampractice.entities.PlaceEntity">
+        select `addr1`       as `addr1`,
+               `area_code`   as `areaCode`,
+               `content_id`  as `contentId`,
+               `first_image` as `firstImage`,
+               `mapX`        as `mapX`,
+               `mapY`        as `mapY`,
+               `title`       as `title`,
+               `overview`    as `overview`
+        from `omcs`.`trip_place`
+        where `content_id` = #{contentId}
+        limit 1
+    </select>
+
+    <select id="selectPlaceByAreaCode"
+            resultType="com.ohmycouse.teampractice.entities.PlaceEntity">
+        select `addr1`       as `addr1`,
+               `area_code`   as `areaCode`,
+               `content_id`  as `contentId`,
+               `first_image` as `firstImage`,
+               `mapX`        as `mapX`,
+               `mapY`        as `mapY`,
+               `title`       as `title`,
+               `overview`    as `overview`
+        from `omcs`.`trip_place`
+        where `area_code` = #{areaCode}
+    </select>
+
+    <select id="selectPlaceByAreaCodePaged"
+            resultType="com.ohmycouse.teampractice.entities.PlaceEntity">
+        select `addr1`       as `addr1`,
+               `area_code`   as `areaCode`,
+               `content_id`  as `contentId`,
+               `first_image` as `firstImage`,
+               `mapX`        as `mapX`,
+               `mapY`        as `mapY`,
+               `title`       as `title`,
+               `overview`    as `overview`
+        from `omcs`.`trip_place`
+        where `area_code` = #{areaCode}
+        limit #{pagingModel.pageCount} offset #{pagingModel.offset}
+    </select>
+
+    <select id="selectPlaceCountByAreaCode"
+            resultType="_int">
+        select count(0)
+        from `omcs`.`trip_place`
+        where `area_code` = #{areaCode}
+    </select>
+
+    <select id="selectDetailByContentId"
+            resultType="com.ohmycouse.teampractice.entities.PlaceEntity">
+        SELECT `addr1`       AS `addr1`,
+               `area_code`   AS `areaCode`,
+               `content_id`  AS `contentId`,
+               `first_image` AS `firstImage`,
+               `mapX`        AS `mapX`,
+               `mapY`        AS `mapY`,
+               `title`       AS `title`,
+               `overview`    AS `overview`
+        FROM `omcs`.`trip_place`
+        WHERE `content_id` = #{contentId}
+        LIMIT 1
+    </select>
+    <select id="selectCount"
+            resultType="int">
+        SELECT COUNT(0) AS `count`
+        FROM `omcs`.`trip_place`
+        <if test='searchCriterion.equals("title")'>
+            WHERE `title` LIKE CONCAT('%', #{searchQuery}, '%')
+        </if>
+        <if test='searchCriterion.equals("overview")'>
+            WHERE `overview` LIKE CONCAT('%', #{searchQuery}, '%')
+        </if>
+    </select>
+    <select id="selectByPage"
+            resultType="com.ohmycouse.teampractice.entities.PlaceEntity">
+        SELECT `addr1`       AS `addr1`,
+        `area_code`   AS `areaCode`,
+        `content_id`  AS `contentId`,
+        `first_image` AS `firstImage`,
+        `mapX`        AS `mapX`,
+        `mapY`        AS `mapY`,
+        `title`       AS `title`,
+        `overview`    AS `overview`
+        FROM `omcs`.`trip_place`
+        <if test='searchCriterion.equals("title")'>
+            WHERE `title` LIKE CONCAT('%', #{searchQuery}, '%')
+        </if>
+        <if test='searchCriterion.equals("overview")'>
+            WHERE `overview` LIKE CONCAT('%', #{searchQuery}, '%')
+        </if>
+        ORDER BY `content_id` DESC
+        LIMIT #{pagingModel.pageCount} OFFSET #{pagingModel.offset};
+
+    </select>
+
+
+    <!--    <select id="selectPlaceByAreaCode"-->
+    <!--            resultType="com.ohmycouse.teampractice.entities.PlaceEntity"><![CDATA[-->
+    <!--        select * from `omcs`.`trip_place`-->
+    <!--where `area_code` = 1-->
+    <!--]]></select>-->
+</mapper>

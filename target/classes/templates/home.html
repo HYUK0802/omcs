@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>OMCS</title>
+    <link rel="stylesheet" th:href="@{/resources/stylesheets/home.css}">
+    <link rel="stylesheet" th:href="@{/resources/stylesheets/detail.css}">
+    <script defer th:src="@{/resources/scripts/course/jquery-1.12.3.js}"></script>
+    <script defer th:src="@{/resources/scripts/home.js}"></script>
+    <script defer th:src="@{/resources/scripts/detail.js}"></script>
+    <script defer th:src="@{/resources/scripts/course/map.js}"></script>
+    <script src="https://kit.fontawesome.com/df5bb2a201.js" crossorigin="anonymous"></script>
+    <script src="//dapi.kakao.com/v2/maps/sdk.js?appkey=71fc87fcfe529918b095ec79a528be16&libraries=services,clusterer,drawing"></script>
+</head>
+
+<body>
+
+
+<div class="wrap">
+    <div class="head">
+        <div class="head-con">
+            <div class="logo">
+                <a href="/">
+                    <p>O<span>h</span> M<span>y</span> C<span>our</span>S<span>e</span></p>
+                </a>
+            </div>
+
+            <nav class="nav">
+                <ul class="main-menu">
+                    <li>
+                        <a href="/course">코스만들기</a>
+                    </li>
+                    <li>
+                        <a href="/community">커뮤니티</a>
+                    </li>
+                    <li>
+                        <a href="/notice">공지사항</a>
+                    </li>
+                    <li class="userLi" th:if="${session.user != null}">
+                        <a href="/mypage">마이페이지</a>
+                    </li>
+                    <li data-action="showLogin" th:if="${session.user == null}">
+                        <a href="/user/login" id="showLogin">로그인</a>
+                    </li>
+                    <li data-action="shouLogout" th:if="${session.user != null}">
+                        <a href="/user/logout" id="showLogout">로그아웃</a>
+                    </li>
+                </ul>
+
+            </nav>
+        </div>
+    </div>
+
+
+    <div class="slide">
+        <div class="slide-wrap">
+            <a href="/">
+                <img class="slide-img1" th:src="@{/resources/images/slideIMG8(cut).png}">
+            </a>
+            <a href="/">
+                <img class="slide-img1" th:src="@{/resources/images/slideIMG9.png}">
+            </a>
+            <a href="/">
+                <img class="slide-img1" th:src="@{/resources/images/slideIMG4(cut).png}">
+            </a>
+            <a href="/">
+                <img class="slide-img1" th:src="@{/resources/images/slideIMG7.jpg}">
+            </a>
+            <a href="/">
+                <img class="slide-img1" th:src="@{/resources/images/slideIMG5.jpg}">
+            </a>
+            <a href="/">
+                <img class="slide-img1" th:src="@{/resources/images/slideIMG2(수정).png}">
+            </a>
+            <a href="/">
+                <img class="slide-img1" th:src="@{/resources/images/slideIMG3.jpg}">
+            </a>
+        </div>
+    </div>
+
+
+    <div class="contents">
+
+        <div class="hot-con">
+            <h2 class="hot-con-title">인기여행지</h2>
+
+            <div class="btn-box lt-btn">
+                &lt;
+            </div>
+
+            <div class="hot-box">
+
+                <div class="hot-place">
+                    <img class="hot-place-img"
+                         th:src="@{/resources/images/birds.jpg}"
+                         alt="해운대">
+                    <span>해운대 해수욕장</span>
+                </div>
+                <div class="hot-place">
+                    <img class="hot-place-img" th:src="@{/resources/images/경복궁사진.jpg}"
+                         alt="경복궁">
+                    <span>경복궁</span>
+                </div>
+                <div class="hot-place">
+                    <img class="hot-place-img" th:src="@{/resources/images/한라산.jpg}"
+                         alt="한라산">
+                    <span>한라산</span>
+                </div>
+                <div class="hot-place">
+                    <img class="hot-place-img" th:src="@{/resources/images/sheep.jpg}"
+                         alt="한라산">
+                    <span>양떼목장</span>
+                </div>
+                <div class="hot-place">
+                    <img class="hot-place-img" th:src="@{/resources/images/greenTea.jpg}"
+                         alt="보성녹차밭">
+                    <span>보성녹차밭</span>
+                </div>
+                <div class="hot-place">
+                    <img class="hot-place-img" th:src="@{/resources/images/cheomseongdae.jpg}"
+                         alt="첨성대">
+                    <span>첨성대</span>
+                </div>
+
+
+            </div>
+
+
+            <div class="btn-box gt-btn">
+                &gt;
+            </div>
+
+
+        </div>
+
+
+        <div class="area-con">
+            <div class="area-con-text">
+                <h2>어디로 가고 싶으신가요 ? </h2>
+            </div>
+
+            <form id="searchForm"class="input-div" >
+                <input class="input-value" type="text" placeholder="여행지를 검색해주세요">
+                <input class="search-btn" type="submit" value="검색">
+            </form>
+
+            <div class="area-filter">
+                <a class='visited seoul' href="#" id="buttonA">서울</a>
+                <a href="#" id="buttonB" class="busan">부산</a>
+                <a href="#" class="jeju">제주</a>
+                <a href="#" class="daegu">대구</a>
+                <a href="#" class="incheon">인천</a>
+                <a href="#" class="ulsan">울산</a>
+                <a href="#" class="daejeon">대전</a>
+                <a href="#" class="gwangju">광주</a>
+
+                <a href="#" class="gyeonggi">경기</a>
+                <a href="#" class="gangwon">강원</a>
+                <a href="#" class="gyeongbuk">경북</a>
+                <a href="#" class="gyeongnam">경남</a>
+                <a href="#" class="chungbuk">충북</a>
+                <a href="#" class="chungnam">충남</a>
+                <a href="#" class="jeonbuk">전북</a>
+                <a href="#" class="jeonnam">전남</a>
+            </div>
+            <div class="area2 active" id="placeList">
+            </div>
+            <!--            <div class="area">-->
+            <!--                <div>-->
+            <!--                    <section class="area-list">-->
+            <!--                        <ul class="list seoul-placeList">-->
+            <!--                            <li class="item">-->
+            <!--                                <div class="area-image-container">-->
+            <!--                                    <img alt="" class="image"-->
+            <!--                                         src="https://mblogthumb-phinf.pstatic.net/MjAxNzEyMjlfOTcg/MDAxNTE0NTE5NjQwODAz.nmpj_3eXyLQiGdobkKpPKR-p0Mwtq1KQoqyvRFB50v0g.fwQ4ex4h6I2LX3Bw7sy6NDDrFCkC5au3QLLHyMeENasg.JPEG.llsarull/%EB%8C%80%EA%B5%AC_%EC%9D%B4%EC%9B%94%EB%93%9C_%EB%86%80%EC%9D%B4%EA%B8%B0%EA%B5%AC_%EC%A2%85%EB%A5%98_%EB%AA%A8%EC%9D%8C%2C_%EC%B6%94%EC%B2%9C_%281%29.jpg?type=w800">-->
+            <!--                                </div>-->
+            <!--                                <div class="name-container">-->
+            <!--                                    <span class="trip-place-title">대구 여행지들</span>-->
+            <!--                                </div>-->
+            <!--                            </li>-->
+            <!--                        </ul>-->
+            <!--                    </section>-->
+            <!--                </div>-->
+            <!--            </div>-->
+        </div>
+        <ul id="pageContainer">
+            <li class="page">
+                <a class="link">처음</a>
+            </li>
+            <li class="page">
+                <a class="link">이전</a>
+            </li>
+            <li class="page">
+                <a class="link visited">1</a>
+            </li>
+            <li class="page">
+                <a class="link">다음</a>
+            </li>
+            <li class="page">
+                <a class="link">마지막</a>
+            </li>
+        </ul>
+    </div>
+
+    <div id="cover"></div>
+
+    <div class="footer">
+        <div class="footer-con">
+            <div class="box left">
+                <nav class="site-map">
+                    <ul class="foot-menu">
+                        <li class="item-title">OMCS 서비스</li>
+                        <li class="item">
+                            <a href="/notice" class="link">공지사항</a>
+                        </li>
+                        <li class="item">
+                            <a href="/community" class="link">커뮤니티</a>
+                        </li>
+                        <li class="item">
+                            <a href="/course" class="link">코스 만들기</a>
+                        </li>
+                        <li class="item">
+                            <a href="/course" class="link">마이페이지</a>
+                        </li>
+                    </ul>
+                    <ul class="foot-menu">
+                        <li class="item-title">OMCS 기업정보</li>
+                        <li class="item">
+                            <a href="#" class="link">채용정보</a>
+                        </li>
+                        <li class="item">
+                            <a href="#" class="link">파트너십</a>
+                        </li>
+                        <li class="item">
+                            <a href="#" class="link">제휴 문의</a>
+                        </li>
+                    </ul>
+                    <ul class="foot-menu">
+                        <li class="item-title">법적 고지</li>
+                        <li class="item">
+                            <a href="#" class="link">개인정보처리법</a>
+                        </li>
+                        <li class="item">
+                            <a href="#" class="link">이용 약관</a>
+                        </li>
+                        <li class="item">
+                            <a href="#" class="link">법적 고지</a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+            <div class="box right">
+<!--                <span th:text="${user.isAdmin}">어드민 번호</span>-->
+<!--                <a th:if="${session.user.getAdmin() == true}" id="adminPage" href="/admin">관리자페이지</a>-->
+                <a id="adminPage" href="/admin">관리자페이지</a>
+                <a>이용약관 / 개인정보처리방침</a>
+                <span>대구 중구 중앙대로 366 9층, 10층</span>
+                <span>yeo328@kakao.com</span>
+                <span>omcs Co., Ltd All right reserved.</span>
+            </div>
+        </div>
+    </div>
+</div>
+<!--<script type="text/javascript" th:src="@{/resources/scripts/detail.js}"></script>-->
+</body>
+</html>

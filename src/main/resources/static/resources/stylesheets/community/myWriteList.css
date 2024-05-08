@@ -1,0 +1,546 @@
+@charset "UTF-8";
+@import url('https://fonts.googleapis.com/css2?family=Gowun+Dodum&display=swap');
+
+* {
+    padding: 0;
+    margin: 0;
+    font-family: 'Gowun Dodum', sans-serif;
+}
+
+a {
+    text-decoration: none;
+    /*display: block;*/
+}
+a:visited {
+    color: inherit;
+    text-decoration: none;
+}
+
+
+
+header {
+    position: sticky;
+    top: 0;
+    left: 0;
+    padding: 20px 60px;
+    background: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 99;
+}
+.logo > a > p {
+    display: inline-block;
+    text-align: center;
+    color: #bb8cff;
+    font-size: 35px;
+    font-weight: 500;
+}
+.logo {
+    display: inline-block;
+}
+.logo>a:nth-child(2) {
+    color: #ffffff;
+}
+.logo>a>p{
+    display: inline-block;
+    font-style: italic;
+
+}
+.logo>a>p>span{
+    color: black;
+    font-size: 23px;
+    font-weight: normal;
+}
+
+.navigation a{
+    position: relative;
+    font-size: 1.1em;
+    color: black;
+    text-decoration: none;
+    font-weight: 500;
+    margin-left: 40px;
+}
+.navigation a::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: -6px;
+    width: 100%;
+    height: 3px;
+    background: #d6bbff;
+    border-radius: 5px;
+    transform-origin: right;
+    transform: scaleX(0);
+    transition: transform .5s;
+}
+.navigation a:hover::after {
+    transform: scaleX(1);
+}
+
+.navigation > .btnLogin-popup {
+    width: 130px;
+    height: 50px;
+    background: transparent;
+    border: 2px solid #d6bbff;
+    outline: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 1.1em;
+    color: black;
+    font-weight: 500;
+    margin-left: 40px;
+}
+
+.navigation > .btnLogin-popup:hover {
+    background: #d6bbff;
+    color: #162938;
+}
+
+
+/*로고*/
+.logo > a > p {
+    display: inline-block;
+    text-align: center;
+    color: #bb8cff;
+    font-size: 35px;
+    font-weight: bold;
+    margin-top: 4px;
+    margin-left: 50px;
+}
+.logo {
+    display: inline-block;
+}
+.logo>a:nth-child(2) {
+    color: #ffffff;
+}
+.logo>a>p{
+    display: inline-block;
+    font-style: italic;
+
+}
+.logo>a>p>span{
+    color: black;
+    font-size: 23px;
+    font-weight: normal;
+}
+
+/*!*head 메뉴바*!*/
+/*.head {*/
+/*    padding-top: 15px;*/
+/*    padding-bottom: 20px;*/
+/*    grid-area: head;*/
+/*    background-color: #ffffff;*/
+/*    position: fixed;*/
+/*    z-index: 1;*/
+/*    width: 100%;*/
+/*}*/
+
+/*.nav {*/
+/*    !*background-color: cornflowerblue;*!*/
+/*    !*height: 100px;*!*/
+/*    display: inline-block;*/
+/*    float: right;*/
+/*    padding-right: 30px;*/
+/*}*/
+
+/*.main-menu {*/
+/*    !*display: inline-block;*!*/
+/*    float: right;*/
+/*    text-align: center;*/
+/*}*/
+
+/*.main-menu > li {*/
+/*    !*width: 100px;*!*/
+/*    !*height: 100%;*!*/
+/*    !*height: 20px;*!*/
+/*    !*background-color: bisque;*!*/
+/*    !*padding: 10px;*!*/
+/*}*/
+/*.main-menu > li > a {*/
+/*    display: inline-block;*/
+/*    color: black;*/
+/*    width: 100px;*/
+/*    height: 17px;*/
+/*    padding: 10px;*/
+/*    !*padding: 20px;*!*/
+/*    !*padding: 13px;*!*/
+/*}*/
+/*.main-menu > li:hover {*/
+/*    background-color: #D6BBFF;*/
+/*    border-radius: 8px;*/
+/*}*/
+/*.main-menu > li >a:hover {*/
+/*    color: #ffffff;*/
+/*}*/
+
+
+
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    font-family: 'Black Han Sans', sans-serif;
+    font-family: 'Gothic A1', sans-serif;
+    font-family: 'Nanum Gothic', sans-serif;
+    font-family: 'Noto Sans KR', sans-serif;
+    font-family: 'Roboto', sans-serif;
+}
+
+div {
+    border-radius: 16px;
+
+
+}
+
+
+body {
+    background-color: #f3f5f7;
+    position: relative;
+}
+
+
+
+.banner {
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.5);
+    position: sticky;
+    top: 81px;
+    margin-right: 10px;
+    /* Position the banner at the top of its container */
+}
+
+.banner .content {
+    text-align: center;
+    padding: 20px;
+    margin: 0;
+}
+
+.banner i {
+    font-size: 24px;
+    margin-bottom: 10px;
+}
+
+.banner h2 {
+    display: block;
+    margin-bottom: 50px;
+    color: #333;
+    font-weight: bold;
+    font-size: 25px;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.banner a {
+    display: block;
+    margin-bottom: 50px;
+    color: #333;
+    font-weight: bold;
+    font-size: 20px;
+    text-decoration: none;
+    transition: color 0.3s ease;
+    color: #d6bbff;
+}
+
+.banner a:hover {
+    color: #555;
+}
+.banner a:hover::before {
+    transform: translateY(-2px) rotate(90deg);
+}
+
+
+body {
+    margin: 0;
+    padding: 0;
+    background-color: #f3f5f7;
+}
+
+@media screen and (max-width: 768px) {
+    .containerForm {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .banner {
+        width: 100%;
+        margin-bottom: 10px;
+        border-radius: 16px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        position: sticky;
+        top: 83px;
+    }
+}
+
+img {
+    width: 200px;
+    height: 200px;
+}
+table {
+    width: 100%;
+    border-collapse: collapse;
+    border-spacing: 0;
+    position: relative;
+    z-index: 1;
+    border: none;
+    background-color: white;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* 그림자 설정 */
+    border-radius: 20px;
+}
+
+th, td {
+    padding: 12px 10px;
+    text-align: center;
+    border: none;
+}
+th:last-child,
+td:last-child {
+    border-right: none;
+}
+
+th {
+    background-color: #d6bbff;
+    color: white;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+/* 삭제 및 수정 버튼 스타일 */
+.delete, .modify {
+    display: inline-block;
+    padding: 8px 16px;
+    border-radius: 4px;
+    text-decoration: none;
+    background-color: #d6bbff;
+    color: white;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+}
+
+.delete:hover, .modify:hover {
+    background-color: #b196e6;
+}
+
+/* 링크 아이콘 스타일 */
+.delete::before, .modify::before {
+    display: inline-block;
+    font-family: 'Font Awesome 5 Free';
+    font-weight: 900;
+    margin-right: 8px;
+}
+
+.delete::before {
+    content: '\f1f8';  /* 휴지통 아이콘 */
+}
+
+.modify::before {
+    content: '\f044';  /* 수정 아이콘 */
+}
+
+.containerForm {
+    height: auto;
+    margin: 80px ;
+}
+#footer {
+
+    height: 220px;
+}
+.container {
+    width: 1100px;
+    height: inherit;
+    margin: 40px auto;
+
+}
+
+/* 푸터 */
+.footer {
+    background-color: #f7f2ff;
+    padding: 0 10%;
+}
+
+.footer > .footer-con{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}
+
+.footer > .footer-con > .box {
+    align-items: center;
+    border-bottom: 0.0625rem solid #e5e5e5;
+    display: flex;
+    flex-direction: column;
+    font-size: 0.9rem;
+    justify-content: flex-start;
+    letter-spacing: 0.0375rem;
+    line-height: 125%;
+    padding: 4.5rem 0 2rem 0;
+    text-align: center;
+}
+
+.footer > .footer-con > .left {
+    margin-left: 3rem;
+}
+
+.footer > .footer-con > .box > .site-map {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+}
+
+.footer > .footer-con > .box > .site-map > .foot-menu {
+    align-items: stretch;
+    display: flex;
+    flex-direction: column;
+    font-size: 0.9rem;
+    justify-content: flex-start;
+    list-style-type: none;
+    margin-block: unset;
+    margin-inline: unset;
+    padding-inline: unset;
+    padding-bottom: 3.5rem;
+    margin-right: 2rem;
+    text-align: start;
+}
+
+.footer > .footer-con > .box > .site-map > .foot-menu > .item-title {
+    font-size: 1.15rem;
+}
+
+.footer > .footer-con > .box > .site-map > .foot-menu > .item {
+    margin-top: 0.95rem;
+}
+
+.footer > .footer-con > .box > .site-map > .foot-menu > .item > a:hover {
+    text-decoration: underline;
+}
+
+.footer >.footer-con > .box > span {
+    display: block;
+    padding: 10px;
+}
+.footer > .footer-con> .box > a {
+    padding: 10px;
+}
+
+
+@media screen and (max-width: 768px) {
+    .navigation a{
+        margin-left: 5px;
+        font-size: 0.9em;
+        display: none;
+    }
+    .logo > a > p {
+        font-size: 20px;
+    }
+    header {
+        padding: 20px 20px;
+    }
+
+    .navigation > .btnLogin-popup {
+        width: 70px;
+        height: 30px;
+        font-size: 0.7em;
+        margin-left: 5px;
+    }
+
+    .containerForm {
+        margin: 80px 5% 30px;
+    }
+
+    th, td {
+        padding: 8px 10px;
+    }
+    img {
+        display: none;
+    }
+
+    th {
+        font-size: 14px;
+    }
+
+    td {
+        font-size: 10px;
+    }
+
+    .banner {
+        margin: 8px 5%;
+    }
+}
+
+
+
+@media screen and (min-width: 601px) and (max-width: 768px) {
+
+    .footer > .footer-con {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .footer > .footer-con > .box {
+        align-items: center;
+        border-bottom: 0.0625rem solid #e5e5e5;
+        display: flex;
+        flex-direction: column;
+        font-size: 0.9rem;
+        justify-content: flex-start;
+        letter-spacing: 0.0375rem;
+        line-height: 125%;
+        padding: 1rem 0 1rem 0;
+        text-align: center;
+    }
+
+    .footer > .footer-con > .box > .site-map > .foot-menu {
+        align-items: stretch;
+        display: flex;
+        flex-direction: column;
+        font-size: 0.9rem;
+        justify-content: flex-start;
+        list-style-type: none;
+        margin-block: unset;
+        margin-inline: unset;
+        padding-inline: unset;
+        padding-bottom: 0;
+        margin-right: 2rem;
+        text-align: start;
+    }
+
+    .footer > .footer-con {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .footer > .footer-con > .box {
+        align-items: center;
+        border-bottom: 0.0625rem solid #e5e5e5;
+        display: flex;
+        flex-direction: column;
+        font-size: 0.9rem;
+        justify-content: flex-start;
+        letter-spacing: 0.0375rem;
+        line-height: 125%;
+        padding: 1rem 0 1rem 0;
+        text-align: center;
+    }
+
+    .footer > .footer-con > .box > .site-map > .foot-menu {
+        align-items: stretch;
+        display: flex;
+        flex-direction: column;
+        font-size: 0.9rem;
+        justify-content: flex-start;
+        list-style-type: none;
+        margin-block: unset;
+        margin-inline: unset;
+        padding-inline: unset;
+        padding-bottom: 0;
+        margin-right: 2rem;
+        text-align: start;
+    }
+
+    .footer > .footer-con > .box > .site-map > .foot-menu > .item-title {
+        font-size: 0.9rem;
+        font-weight: bold;
+    }
+}

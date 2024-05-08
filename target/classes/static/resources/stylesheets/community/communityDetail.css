@@ -1,0 +1,450 @@
+@charset "UTF-8";
+@import url('https://fonts.googleapis.com/css2?family=Gowun+Dodum&display=swap');
+
+* {
+    padding: 0;
+    margin: 0;
+    font-family: 'Gowun Dodum', sans-serif;
+}
+
+ul {
+    list-style-type: none;
+}
+
+a {
+    text-decoration: none;
+    display: block;
+}
+
+li {
+    display: inline-block;
+}
+
+html, body {
+    width: 100%;
+    height: 100%;
+    /*overflow-y: auto;*/
+}
+.head {
+    padding-top: 15px;
+    padding-bottom: 20px;
+    grid-area: head;
+    background-color: #ffffff;
+    position: fixed;
+    z-index: 1;
+    width: 100%;
+}
+
+.slide {
+    grid-area: slide;
+    /*background-color: orange;*/
+
+    padding: 30px;
+
+}
+
+.contents {
+    grid-area: contents;
+    /*background-color: yellow;*/
+    /*height: 100%;*/
+    /*overflow: hidden;*/
+    /*max-height: 100%;*/
+    /*overflow: auto;*/
+}
+
+.footer {
+    grid-area: footer;
+    text-align: center;
+}
+
+/*로고*/
+.logo > a > p {
+    display: inline-block;
+    text-align: center;
+    color: #bb8cff;
+    font-size: 35px;
+    font-weight: bold;
+    margin-top: 4px;
+    margin-left: 50px;
+}
+.logo {
+    display: inline-block;
+}
+.logo>a:nth-child(2) {
+    color: #ffffff;
+}
+.logo>a>p{
+    display: inline-block;
+    font-style: italic;
+
+}
+.logo>a>p>span{
+    color: black;
+    font-size: 23px;
+    font-weight: normal;
+}
+
+/*head 메뉴바*/
+
+.nav {
+    /*background-color: cornflowerblue;*/
+    /*height: 100px;*/
+    display: inline-block;
+    float: right;
+    padding-right: 30px;
+}
+
+.main-menu {
+    /*display: inline-block;*/
+    float: right;
+    text-align: center;
+}
+
+.main-menu > li {
+    /*width: 100px;*/
+    /*height: 100%;*/
+    /*height: 20px;*/
+    /*background-color: bisque;*/
+    /*padding: 10px;*/
+}
+.main-menu > li > a {
+    display: inline-block;
+    color: black;
+    width: 100px;
+    height: 17px;
+    padding: 10px;
+    /*padding: 20px;*/
+    /*padding: 13px;*/
+}
+.main-menu > li:hover {
+    background-color: #D6BBFF;
+    border-radius: 8px;
+}
+.main-menu > li >a:hover {
+    color: #ffffff;
+}
+
+#communityForm {
+    top: 10%;
+    background-color: #fafafa;
+    box-sizing: border-box;
+    border-radius: 1rem;
+    padding: 5rem 8rem;
+    position: relative;
+    margin: 0 15rem;
+
+    align-items: stretch;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+#communityForm > .body-container {
+    width: 100%;
+    margin-bottom: 1rem;
+
+    align-items: stretch;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+}
+
+#communityForm > .body-container > .title-container  {
+    border-bottom: 0.125rem solid #e0e0e0;
+    padding-bottom: 2rem;
+
+    align-items: stretch;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+}
+
+#communityForm > .body-container > .title-container > .nickname {
+    font-size: 1rem;
+    font-weight: 400;
+    padding-bottom: 0.5rem;
+}
+
+#communityForm > .body-container > .title-container > .post-title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    padding-bottom:4rem;
+}
+
+#communityForm > .body-container > .title-container > .post-date {
+    font-size: 1rem;
+    font-weight: 400;
+}
+
+#communityForm > .body-container > .content-container {
+    padding: 2.5rem;
+    overflow: hidden auto;
+}
+
+#communityForm > .body-container > .content-container > .image {
+    width: 70%;
+    height: 50%;
+    border-radius: 1rem;
+    margin: 1rem 0.5rem;
+}
+img {
+    width: 100%;
+    height: 100%;
+}
+
+#communityForm > .dateView {
+    border-top: 0.0625rem solid #e0e0e0;
+    border-bottom: 0.0625rem solid #e0e0e0;
+    padding-top: 1.5rem;
+    padding-bottom: 3rem;
+
+    align-items: stretch;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+#communityForm > .body-container > .title-container > .dateView > * {
+    margin-right: 0.5rem;
+}
+
+#communityForm > .body-container > .title-container > .dateView > .view {
+    margin-right: 1rem;
+}
+
+#communityForm > .dateView > .like-container > .heart-container > .fa-heart {
+    color: red;
+    cursor: pointer;
+}
+
+#communityForm > .body-container > .title-container > .dateView > .count-container {
+    line-height: .04167rem;
+    padding-left: 0.5rem;
+
+    align-items: stretch;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+}
+
+#communityForm > .dateView > .like-container > .count-container > .like-count {
+    margin-left: 0.5rem;
+}
+
+.comment-container {
+    position: relative;
+    margin: 0 15rem;
+    background-color: #fafafa;
+
+    align-items: stretch;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.comment-container > table {
+    left:3rem !important;
+    max-width: 100%;
+}
+
+.comment-container > table > tbody {
+    width: 100%;
+    border: 0.0625rem solid #10151a;
+}
+
+#commentForm {
+    top: 10%;
+    width: 100%;
+    background-color: #fafafa;
+    box-sizing: border-box;
+    border-radius: 1rem;
+    padding: 2rem 5rem;
+    position: relative;
+
+    align-items: stretch;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.label {
+    width: 100%;
+
+    align-items: center;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.label > .comment-title {
+    width: 10%;
+    border: 0.125rem solid #e0e0e0;
+    border-radius: 0.5rem;
+    background-color: #e0e0e0;
+    font-size: 1rem;
+    font-weight: 500;
+    padding: 0.25rem;
+    z-index: 9;
+    text-align: center;
+}
+
+#commentForm > .comment-box > .comment-date {
+    font-size: 0.75rem;
+    font-weight: 350;
+}
+
+#commentForm > .write-container {
+    width: 100%;
+    border-top: 0.0125rem solid #e0e0e0;
+}
+
+#commentForm > .write-container > .label {
+    padding-top: 0.5rem;
+    width: 100%;
+
+    align-items: stretch;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+#commentForm > .write-container > .label > .comment {
+    width: 100%;
+    border: 0.0125rem solid #d6BBFF;
+    border-radius: 0.5rem;
+    padding: 0.5rem;
+    margin-right: 0.5rem;
+}
+
+#commentForm > .write-container > .label > .comment:focus-within {
+    border: 0.0625rem solid #D6BBFF;
+}
+
+#commentForm > .write-container > .label > .button {
+    width: 30%;
+    background-color: #d6BBFF;
+    border: none;
+    border-radius: 0.5rem;
+    color: #ffffff;
+    cursor: pointer;
+}
+
+
+@media screen and (max-width: 600px) {
+    #communityForm {
+        padding: 8rem 1rem 1rem 1rem;
+        margin: 0;
+    }
+
+    #communityForm > .body-container > .title-container > .post-title {
+        font-size: 1.2rem;
+        padding-bottom: 2rem;
+    }
+
+    #communityForm > .body-container > .content-container > .image {
+        width: 100%;
+        height: auto;
+    }
+
+    #communityForm > .dateView {
+        padding-top: 1rem;
+        padding-bottom: 2rem;
+    }
+    #communityForm > .dateView > .like-container > .count-container > .like-count {
+        margin-left: 0.2rem;
+    }
+
+    .comment-container {
+        margin: 4.5rem 1.5rem;
+        padding: 1rem;
+    }
+
+    #commentForm {
+        padding: 1rem;
+    }
+    #commentForm > .write-container > .label > .comment {
+        margin-right: 0.2rem;
+    }
+
+    .label > .comment-title {
+        width: 3rem;
+        border: 0.125rem solid #e0e0e0;
+        border-radius: 0.5rem;
+        background-color: #e0e0e0;
+        font-size: 1rem;
+        font-weight: 500;
+        padding: 0.25rem;
+        z-index: 9;
+        text-align: center;
+    }
+
+
+    #commentForm > .write-container {
+        width: 100%;
+        border-top: 0.0125rem solid #e0e0e0;
+    }
+
+    #commentForm > .write-container > .label {
+        padding-top: 0.5rem;
+        width: 100%;
+        align-items: stretch;
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+    }
+
+    #commentForm > .write-container > .label > .comment {
+        width: 9rem;
+        border: 0.0125rem solid #d6BBFF;
+        border-radius: 0.5rem;
+        padding: 0.5rem;
+        margin-right: 0.5rem;
+    }
+
+    #commentForm > .write-container > .label > .button {
+        width: 3rem;
+        background-color: #d6BBFF;
+        border: none;
+        border-radius: 0.5rem;
+        color: #ffffff;
+        cursor: pointer;
+    }
+}
+
+
+
+@media screen and (min-width: 601px) and (max-width: 900px) {
+    #communityForm {
+        padding: 3rem 6rem;
+        margin: 0;
+    }
+
+    #communityForm > .body-container > .title-container > .post-title {
+        font-size: 1.3rem;
+        padding-bottom: 3rem;
+    }
+
+    #communityForm > .body-container > .content-container > .image {
+        width: 100%;
+        height: auto;
+    }
+
+    #communityForm > .dateView {
+        padding-top: 2rem;
+        padding-bottom: 4rem;
+    }
+    #communityForm > .dateView > .like-container > .count-container > .like-count {
+        margin-left: 0.3rem;
+    }
+
+    .comment-container {
+        padding: 2rem;
+    }
+
+    #commentForm {
+        padding: 1.5rem 3rem;
+    }
+    #commentForm > .write-container > .label > .comment {
+        margin-right: 0.3rem;
+    }
+}

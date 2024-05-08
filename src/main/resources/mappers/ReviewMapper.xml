@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ohmycouse.teampractice.mappers.ReviewMapper">
+
+    <insert id="insertReview"
+            useGeneratedKeys="true"
+            keyColumn="index"
+            keyProperty="index"
+            parameterType="com.ohmycouse.teampractice.entities.ReviewEntity">
+        INSERT INTO `omcs`.`review`(content_id, nickname, content, deleted_flag, created_at, score, client_ip,
+                                    client_ua)
+        VALUES (#{contentId},
+                #{nickname},
+                #{content},
+                #{isDeleted},
+                IFNULL(#{createdAt}, DEFAULT(`created_at`)),
+                #{score},
+                #{clientIp},
+                #{clientUa})
+    </insert>
+
+    <select id="selectReviewsByContentId"
+            resultType="com.ohmycouse.teampractice.entities.ReviewEntity">
+        SELECT `index`        AS `index`,
+               `content_id`   AS `contentId`,
+               `nickname`     AS `nickname`,
+               `content`      AS `content`,
+               `deleted_flag` AS `isDeleted`,
+               `created_at`   AS `createdAt`,
+               `score`        AS `score`,
+               `client_ip`    AS `clientIp`,
+               `client_ua`    AS `clientUa`
+        FROM `omcs`.`review`
+        WHERE `content_id` = #{contentId}
+        ORDER BY `index` DESC
+    </select>
+
+    <select id="selectReviewByScoreAverage"
+            resultType="java.lang.Double">
+        SELECT AVG(`score`)
+        FROM `omcs`.`review`
+        WHERE `content_id` = #{contentId}
+    </select>
+
+    <delete id="deleteByReview">
+        DELETE
+        FROM `omcs`.`review`
+        WHERE `index` = #{index}
+          AND `nickname` = #{nickname}
+        LIMIT 1
+    </delete>
+
+    <update id="updateByReview">
+        UPDATE `omcs`.`review`
+        SET `content` = #{content}
+        WHERE `index` = #{index}
+        LIMIT 1
+    </update>
+
+    <insert id="insertMyPick"
+            useGeneratedKeys="true"
+            keyColumn="index"
+            keyProperty="index"
+            parameterType="com.ohmycouse.teampractice.entities.MyPickEntity">
+        insert into `omcs`.`my_pick` (area_code, addr1, first_image,content_id, email, title)
+        VALUES (#{areaCode},
+                #{addr1},
+                #{firstImage},
+                #{contentId},
+                #{email},
+                #{title})
+
+    </insert>
+
+</mapper>

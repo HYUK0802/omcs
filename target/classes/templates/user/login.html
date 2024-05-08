@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" th:if="${session.user == null}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>OMCS - 로그인</title>
+    <link rel="stylesheet" th:href="@{/resources/stylesheets/user/login.css}">
+    <script defer th:src="@{/resources/scripts/user/login.js}"></script>
+</head>
+<body>
+
+<!--<header>-->
+<!--    <h2 class="logo">오마코스</h2>-->
+<!--    <nav class="navigation">-->
+<!--        <a href="#">커뮤니티</a>-->
+<!--        <a href="#">코스만들기</a>-->
+<!--        <a href="#">마이페이지</a>-->
+<!--        <button class="btnLogin-popup">로그인</button>-->
+<!--    </nav>-->
+<!--</header>-->
+<div class="wrapper logo" style="height: 100px; position: absolute; margin-top: -650px; margin-left: -5%; box-shadow: none">
+    <a href="/">
+        <p>O<span>h</span> M<span>y</span> C<span>our</span>S<span>e</span></p>
+<!--        <p>OMCS</p>-->
+    </a>
+
+</div>
+
+<div class="wrapper">
+    <div class="form-box login">
+        <h2>로그인</h2>
+        <form id="loginForm">
+            <div class="input-box">
+                <span class="icon"><ion-icon name="mail"></ion-icon></span>
+                <input maxlength="50" name="email" type="email">
+                <label>이메일 주소</label>
+            </div>
+            <span class="warning email" rel="emailWarning">올바른 이메일을 입력해주세요</span>
+            <div class="input-box">
+                <span class="icon"><ion-icon name="lock-closed-outline"></ion-icon></span>
+                <input maxlength="50" name="password" type="password">
+                <label>비밀번호</label>
+            </div>
+            <span class="warning password" rel="passwordWarning">올바른 비밀번호를 입력해주세요</span>
+            <br>
+            <span class="warning login" rel="loginWarning">이메일 혹은 비밀번호가 올바르지 않습니다.</span>
+            <div class="remember-forgot">
+                <label><input type="checkbox">이메일 기억하기</label>
+            </div>
+            <div class="btn-container">
+                <button type="submit" class="btn" id="button">로그인</button>
+            </div>
+            <div class="login-register">
+                <p>아직 계정이 없으신가요? <a href="/user/register" class="register-link">회원가입</a></p>
+                <a href="/user/recoveremail">이메일 찾기 | </a>
+                <a href="/user/recoverpassword">비밀번호 찾기</a>
+            </div>
+        </form>
+    </div>
+</div>
+<!--<script defer th:src="@{/resources/scripts/home.js}"></script>-->
+<script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+<script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+</body>
+</html>

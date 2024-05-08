@@ -1,0 +1,248 @@
+<!doctype html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>OMCS - 커뮤니티</title>
+    <link rel="stylesheet" th:href="@{/resources/stylesheets/community/community.css}">
+    <link rel="stylesheet" th:href="@{/resources/stylesheets/detail.css}">
+    <script defer th:src="@{/resources/scripts/detail.js}"></script>
+    <script defer th:src="@{/resources/scripts/community/community.js}"></script>
+
+    <script src="https://kit.fontawesome.com/df5bb2a201.js" crossorigin="anonymous"></script>
+    <script th:onclick=""></script>
+
+</head>
+<body>
+<div id="cover"></div>
+<!-- header -->
+<div class="head">
+    <div class="head-con">
+        <div class="logo">
+            <a href="/">
+                <p>O<span>h</span> M<span>y</span> C<span>our</span>S<span>e</span></p>
+            </a>
+        </div>
+
+        <nav class="nav">
+            <ul class="main-menu">
+                <li>
+                    <a href="/course">코스만들기</a>
+                </li>
+                <li>
+                    <a href="/community">커뮤니티</a>
+                </li>
+                <li>
+                    <a href="/notice">공지사항</a>
+                </li>
+                <li class="userLi" th:if="${session.user != null}">
+                    <a href="/mypage">마이페이지</a>
+                    <!--                    <a href="#"><img src="./icons/icons8-user-48.png" alt="마이페이지"></a>-->
+                    <ul class="sub-menu">
+                        <!-- <li><a href="#">내여행코스</a></li>
+                        <li><a href="#">비밀번호변경</a></li>
+                        <li><a href="#">찜리스트</a></li>
+                        <li><a href="#">??</a></li> -->
+                    </ul>
+                </li>
+                <li data-action="showLogin" th:if="${session.user == null}">
+                    <a href="/user/login" id="showLogin">로그인</a>
+                </li>
+                <li data-action="shouLogout" th:if="${session.user != null}">
+                    <a href="/user/logout" id="showLogout">로그아웃</a>
+                </li>
+            </ul>
+
+        </nav>
+    </div>
+
+</div>
+
+<main class="main-container">
+    <div class="banner">
+        <img class="bn-imo" src="/resources/images/seoul.jpg">
+    </div>
+    <h2 class="cm-title"> OH! 여행 후기 </h2>
+    <section class="search-section">
+<!--        <div class="keyword-wrapper">-->
+<!--            <span hidden class="tip">검색</span>-->
+<!--            <img alt="" class="icon" src="/resources/images/search.png">-->
+<!--            <input class="keyword-input" maxlength="50" name="keyword" placeholder="검색어를 입력해주세요" type="text">-->
+<!--        </div>-->
+        <form id="searchForm" method="get">
+            <label class="label">
+                <div class="selectBox">
+                    <select name="c" class="select">
+                        <option selected value="title">제목</option>
+                        <option value="nickname">작성자</option>
+                    </select>
+                </div>
+            </label>
+            <label class="keyword-wrapper">
+                <input class="keyword-input" maxlength="10" name="q" placeholder="검색" type="text">
+            </label>
+<!--            <input type="submit" class="button" value="검색">-->
+        </form>
+        <div class="search-btn">
+            <div class="btn-box">
+                <button type="button" class="btn-1 btnFirst" onclick="sortBy('latest')">최신순</button>
+                <button type="button" class="btn-1" onclick="sortBy('views')">조회수순</button>
+                <button type="button" class="btn-1" onclick="sortBy('popular')">인기순</button>
+
+                <script>
+                    function sortBy(sortType) {
+                        const url = new URL(window.location.href);
+                        url.searchParams.set('sort', sortType);
+                        window.location.href = url.toString();
+                    }
+                </script>
+                <button type="button" class="btn-1" id="myPostsBtn"><a href="/community/myWriteList">나의 글</a></button>
+                <button type="button" class="btn-2" id="writeButton"><a href="/community/write">작성하기</a></button>
+            </div>
+
+        </div>
+    </section>
+
+    <div class="main-content">
+        <div class="community-item" onclick="location.href='communityDetail.html'"
+             th:onclick="|location.href='@{/community/communityDetail (index=${article.getIndex()})}'|" th:each="article : ${articleVos}">
+            <div class="wr">
+                <div class="wr-box">
+                    <div th:text="${article.getNickname()}"></div>
+                </div>
+                <div class="c-line"></div>
+                <div class="day-box" th:text="${article.getFirstCreatedAt()}"></div>
+            </div>
+            <div class="im" th:utext="${article.getFirstImage()}"></div>
+            <div class="subinfo">
+                <p th:text="${article.getTitle()}"></p>
+            </div>
+        </div>
+    </div>
+
+    <section class="page-section">
+        <ul id="pageContainer">
+
+            <li class="page" th:if="${pagingModel.requestPage > 1}">
+                <a th:href="@{'./community' (p = ${1}, c = ${searchCriterion}, q=${searchQuery})}" class="link">처음</a>
+            </li>
+
+            <li class="page">
+                <a th:href="@{'./community' (p = ${pagingModel.requestPage - 1}, c = ${searchCriterion}, q =${searchQuery})}" class="link">이전</a>
+            </li>
+            <li class="page" th:each="page : ${#numbers.sequence(pagingModel.displayStartPage,pagingModel.displayEndPage)}">
+                <a th:href="@{'./community'(p = ${page}, c = ${searchCriterion}, q = ${searchQuery})}" class="link" th:text="${page}"></a>
+            </li>
+            <li class="page" th:if="${pagingModel.requestPage < pagingModel.maxPage}">
+                <a th:href="@{'./community' (p=${pagingModel.requestPage + 1}, c = ${searchCriterion}, q = ${searchQuery})}" class="link">다음</a>
+            </li>
+            <li class="page">
+                <a th:href="@{(p = ${pagingModel.displayEndPage}, c = ${searchCriterion}, q = ${searchQuery})}" class="link" th:if ="${pagingModel.requestPage != pagingModel.maxPage }">마지막</a>
+            </li>
+
+        </ul>
+    </section>
+</main>
+
+<div class="footer">
+    <div class="footer-con">
+        <div class="box left">
+            <nav class="site-map">
+                <ul class="foot-menu">
+                    <li class="item-title">OMCS 서비스</li>
+                    <li class="item">
+                        <a href="/notice" class="link">공지사항</a>
+                    </li>
+                    <li class="item">
+                        <a href="/community" class="link">커뮤니티</a>
+                    </li>
+                    <li class="item">
+                        <a href="/course" class="link">코스 만들기</a>
+                    </li>
+                </ul>
+                <ul class="foot-menu">
+                    <li class="item-title">OMCS 기업정보</li>
+                    <li class="item">
+                        <a href="#" class="link">채용정보</a>
+                    </li>
+                    <li class="item">
+                        <a href="#" class="link">파트너십</a>
+                    </li>
+                    <li class="item">
+                        <a href="#" class="link">제휴 문의</a>
+                    </li>
+                </ul>
+                <ul class="foot-menu">
+                    <li class="item-title">법적 고지</li>
+                    <li class="item">
+                        <a href="#" class="link">개인정보처리법</a>
+                    </li>
+                    <li class="item">
+                        <a href="#" class="link">이용 약관</a>
+                    </li>
+                    <li class="item">
+                        <a href="#" class="link">법적 고지</a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+        <div class="box right">
+            <a id="adminPage" href="/admin">관리자페이지</a>
+            <a>이용약관 / 개인정보처리방침</a>
+            <span>대구 중구 중앙대로 366 9층, 10층</span>
+            <span>yeo328@kakao.com</span>
+            <span>omcs Co., Ltd All right reserved.</span>
+        </div>
+    </div>
+</div>
+
+<!--<form id="communityForm">-->
+<!--    <div class="close" id="communityClose"></div>-->
+<!--    <div class="body-container">-->
+<!--        <div class="title-container">-->
+<!--            <div class="tinick">-->
+<!--                <h2 class="post-title">게시글 제목</h2>-->
+<!--                <h3 class="nickname">닉네임</h3>-->
+<!--            </div>-->
+<!--            <div class="dateView">-->
+<!--                <div class="like-container">-->
+<!--                    <label class="heart-container">-->
+<!--                        <i class="fa-solid fa-heart fa-xl"></i>-->
+<!--                    </label>-->
+<!--                    <label class="count-container">-->
+<!--                        <b class="like-count">333</b><span>명이 좋아합니다.</span>-->
+<!--                    </label>-->
+<!--                </div>-->
+<!--                <span class="view">조회수 333회 </span>-->
+<!--                <span class="post-date">2023-06-15</span>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--        <div class="content-container">-->
+<!--            게시글 내용<br>게시글 내용<br>게시글 내용<br>-->
+<!--            <img th:src="@{/resources/images/seoul.jpg}" class="image">-->
+<!--            게시글 내용<br>게시글 내용<br>게시글 내용<br>게시글 내용<br>게시글 내용<br>게시글 내용<br>게시글 내용<br>게시글 내용<br>게시글 내용<br>-->
+<!--            <img th:src="@{/resources/images/seoul.jpg}" class="image">-->
+<!--            게시글 내용<br>게시글 내용<br>게시글 내용<br>게시글 내용<br>-->
+<!--        </div>-->
+
+<!--    </div>-->
+<!--    <div class="comment-container">-->
+<!--        <h3 class="comment-title">댓글</h3>-->
+<!--        <div class="comment-container">-->
+<!--            <div class="comment-box">-->
+<!--                <span class="comment">ㅎㅇ</span>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--        <div class="write-container">-->
+<!--            <label class="label">-->
+<!--                <input class="comment" type="text">-->
+<!--                <input class="button" type="submit" value="작성">-->
+<!--            </label>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--</form>-->
+
+</body>
+</html>

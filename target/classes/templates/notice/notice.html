@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>OMCS - 공지사항</title>
+    <link rel="stylesheet" th:href="@{/resources/stylesheets/notice/notice.css}">
+    <script th:inline="javascript">
+        var isAdmin = /*[[${session.user != null && session.user.admin}]]*/ false;
+    </script>
+    <script defer th:src="@{/resources/scripts/notice/notice.js}"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            let clickableRows = document.querySelectorAll('.clickable-row');
+            clickableRows.forEach(function(row) {
+                row.addEventListener('click', function() {
+                    let nextRow = row.nextElementSibling;
+                    if (nextRow.classList.contains('noticeContent')) {
+                        let displayValue = window.getComputedStyle(nextRow).getPropertyValue('display');
+                        nextRow.style.display = (displayValue === 'none') ? 'table-row' : 'none';
+                    }
+                });
+            });
+        });
+    </script>
+</head>
+<body>
+<div id="wrap">
+    <div class="head">
+        <div class="head-con">
+            <div class="logo">
+                <a href="/">
+                    <p>O<span>h</span> M<span>y</span> C<span>our</span>S<span>e</span></p>
+                </a>
+            </div>
+
+            <nav class="nav">
+                <ul class="main-menu">
+                    <li>
+                        <a href="/course">코스만들기</a>
+                    </li>
+                    <li>
+                        <a href="/community">커뮤니티</a>
+                    </li>
+                    <li>
+                        <a href="/notice">공지사항</a>
+                    </li>
+                    <li class="userLi" th:if="${session.user != null}">
+                        <a href="/mypage">마이페이지</a>
+                    </li>
+                    <li data-action="showLogin" th:if="${session.user == null}">
+                        <a href="/user/login" id="showLogin">로그인</a>
+                    </li>
+                    <li data-action="shouLogout" th:if="${session.user != null}">
+                        <a href="/user/logout" id="showLogout">로그아웃</a>
+                    </li>
+                </ul>
+
+            </nav>
+        </div>
+
+    </div>
+
+    <div id="contents">
+
+        <div class="contents-slide">
+            <div class="image-box">
+                <img class="slide-img1" th:src="@{/resources/images/boat.jpeg}">
+                <span>공지사항</span>
+
+            </div>
+        </div>
+
+        <div class="contents-notice">
+<!--            <form method="post" id="memoForm">-->
+<!--                <div class="container">-->
+<!--                    <label class="button-container notice-container">-->
+<!--                        <button>공지사항</button>-->
+<!--                    </label>-->
+<!--                    <label class="button-container Qna-container">-->
+<!--                        <button>Q&A</button>-->
+<!--                    </label>-->
+<!--                    &lt;!&ndash;                        <input class="button" type="submit" value="작성하기">&ndash;&gt;-->
+<!--                </div>-->
+<!--            </form>-->
+
+            <form id="searchForm" method="get">
+                <label class="label">
+                    <select name="c" class="input">
+                        <option selected value="content">내용</option>
+                        <option value="title">제목</option>
+                    </select>
+                </label>
+                <label class="label">
+                    <input class="input" maxlength="10" name="q" placeholder="검색" type="text">
+                </label>
+                <input class="button" type="submit" value="검색">
+            </form>
+
+
+            <form id="writeForm"  th:if="${session.user != null && session.user.admin}">
+                <span>관리자전용 공지사항 글작성 </span>
+                <label class="label">
+                    <input class="title-input" placeholder="제목" name="noticeTitle" type="text">
+                    <input class="notice-content"  placeholder="공지내용" name="noticeContent" type="text" >
+                </label>
+                <input id="writeBtn" class="write-button" type="submit" value="작성완료">
+            </form>
+
+
+            <ul id="pageContainer">
+                <li class="page" th:if="${pagingModel.requestPage > 1}">
+                    <a th:href="@{'./notice'(p = ${1}, c=${searchCriterion}, q=${searchQuery})}" class="link">처음</a>
+                </li>
+                <li class="page" th:if="${pagingModel.requestPage > 1}">
+                    <a th:href="@{'./notice' (p=${pagingModel.requestPage - 1}, c=${searchCriterion}, q=${searchQuery})}"
+                       class="link">이전</a>
+                </li>
+                <li class="page"
+                    th:each="page : ${#numbers.sequence(pagingModel.displayStartPage, pagingModel.displayEndPage)}">
+                    <a th:href="@{'./notice' (p=${page}, c=${searchCriterion}, q=${searchQuery})}" class="link"
+                       th:text="${page}"></a>
+                </li>
+                <li class="page" th:if="${pagingModel.requestPage < pagingModel.maxPage}">
+                    <a th:href="@{'./notice'(p=${pagingModel.maxPage}, c=${searchCriterion}, q=${searchQuery})}"
+                       class="link">다음</a>
+                </li>
+                <li class="page">
+                    <a class="link">마지막</a>
+                </li>
+            </ul>
+
+
+            <div id="memoContainer">
+                <table>
+                    <thead>
+                    <tr>
+                        <th>No</th>
+                        <th class="spring">Title</th>
+                        <th>Writer</th>
+
+                        <th>Date</th>
+                        <!--                            <th>삭제</th>-->
+                        <!--                            <th>수정</th>-->
+                    </tr>
+                    </thead>
+                    <tbody th:each="notice: ${notice}">
+                    <tr class="clickable-row">
+                        <th th:text="${notice.getIndex()}">0</th>
+                        <!--                            <td th:text="${notice.getText()}">예시 내용 1</td>-->
+                        <td>
+                            <span th:utext="${notice.getTitle()}">예시 내용 1</span><br>
+                            <!--                            <span th:utext="${notice.getText()}" class="noticeContent"><br>두 번째 줄 내용</span>-->
+                        </td>
+                        <td th:text="${notice.getWriter()}">예시 1</td>
+
+                        <td th:text="${#dates.format(notice.getDatetime(),
+                            'yyyy-MM-dd HH:mm:ss')}">
+
+                        </td>
+                        <td th:if="${session.user != null && session.user.admin}"><button class="noticePatchBtn" th:data-index="${notice.getIndex()}">수정</button></td>
+                        <td th:if="${session.user != null && session.user.admin}"><button class="noticeDeleteBtn" th:data-index="${notice.getIndex()}">삭제</button></td>
+
+                    </tr>
+                    <tr class="noticeContent">
+                        <th></th>
+                        <!--                            <td th:text="${notice.getText()}">예시 내용 1</td>-->
+                        <td><span th:utext="${notice.getText()}">예시 내용 1</span></td>
+                        <td></td>
+                        <td></td>
+                        <!--                            <td>-->
+                        <!--                                <a href="#" class="delete" rel="delete">삭제</a>-->
+                        <!--                            </td>-->
+                        <!--                            <td>-->
+                        <!--                                <a class="modify" href="#" rel="modify">수정</a>-->
+                        <!--                            </td>-->
+
+                    </tr>
+
+
+                    </tbody>
+                </table>
+            </div>
+
+
+            <div id="modifyCover"></div>
+            <form id="modifyForm">
+                <!--                    <h2 class="title">수정</h2>-->
+                <!--                    <label class="label">-->
+                <!--                        <input readonly class="input" name="index" type="text">-->
+                <!--                    </label>-->
+                <!--                    <label class="label">-->
+                <!--                        <input class="input" name="text" type="text">-->
+                <!--                    </label>-->
+                <!--                    <div class="button-container">-->
+                <!--                        <input class="button" rel="close" type="button" value="취소">-->
+                <!--                        <input class="button modify" type="submit" value="수정하기">-->
+                <!--                    </div>-->
+            </form>
+        </div>
+
+    </div>
+
+    <div class="footer">
+        <div class="footer-con">
+            <div class="box left">
+                <nav class="site-map">
+                    <ul class="foot-menu">
+                        <li class="item-title">OMCS 서비스</li>
+                        <li class="item">
+                            <a href="/notice" class="link">공지사항</a>
+                        </li>
+                        <li class="item">
+                            <a href="/community" class="link">커뮤니티</a>
+                        </li>
+                        <li class="item">
+                            <a href="/course" class="link">코스 만들기</a>
+                        </li>
+                    </ul>
+                    <ul class="foot-menu">
+                        <li class="item-title">OMCS 기업정보</li>
+                        <li class="item">
+                            <a href="#" class="link">채용정보</a>
+                        </li>
+                        <li class="item">
+                            <a href="#" class="link">파트너십</a>
+                        </li>
+                        <li class="item">
+                            <a href="#" class="link">제휴 문의</a>
+                        </li>
+                    </ul>
+                    <ul class="foot-menu">
+                        <li class="item-title">법적 고지</li>
+                        <li class="item">
+                            <a href="#" class="link">개인정보처리법</a>
+                        </li>
+                        <li class="item">
+                            <a href="#" class="link">이용 약관</a>
+                        </li>
+                        <li class="item">
+                            <a href="#" class="link">법적 고지</a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+            <div class="box right">
+                <a href="/admin">관리자페이지</a>
+                <a>이용약관 / 개인정보처리방침</a>
+                <span>대구 중구 중앙대로 366 9층, 10층</span>
+                <span>yeo328@kakao.com</span>
+                <span>omcs Co., Ltd All right reserved.</span>
+            </div>
+        </div>
+    </div>
+
+</div>
+</div>
+</body>
+</html>

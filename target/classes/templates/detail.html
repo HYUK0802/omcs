@@ -1,0 +1,187 @@
+<!doctype html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<!--/*@thymesVar id="place" type="com.ohmycouse.teampractice.entities.PlaceEntity"*/-->
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>OMCS - 여행지</title>
+    <link rel="stylesheet" th:href="@{/resources/stylesheets/detail.css}">
+    <script defer th:src="@{/resources/scripts/home.js}"></script>
+    <script defer th:src="@{/resources/scripts/detail.js}"></script>
+    <script defer th:src="@{/resources/scripts/review.js}"></script>
+    <script defer th:src="@{/resources/scripts/detail.map.js}"></script>
+    <script src="https://kit.fontawesome.com/df5bb2a201.js" crossorigin="anonymous"></script>
+    <script src="//dapi.kakao.com/v2/maps/sdk.js?appkey=71fc87fcfe529918b095ec79a528be16&libraries=services,clusterer,drawing"></script>
+</head>
+<body>
+<div class="head">
+    <div class="head-con">
+        <div class="logo">
+            <a href="/">
+                <p>O<span>h</span> M<span>y</span> C<span>our</span>S<span>e</span></p>
+            </a>
+        </div>
+
+        <nav class="nav">
+            <ul class="main-menu">
+                <li>
+                    <a href="/course">코스만들기</a>
+                </li>
+                <li>
+                    <a href="/community">커뮤니티</a>
+                </li>
+                <li>
+                    <a href="/notice">공지사항</a>
+                </li>
+                <li class="userLi" th:if="${session.user != null}">
+                    <a href="/mypage">마이페이지</a>
+                    <!--                    <a href="#"><img src="./icons/icons8-user-48.png" alt="마이페이지"></a>-->
+                    <ul class="sub-menu">
+                        <!-- <li><a href="#">내여행코스</a></li>
+                        <li><a href="#">비밀번호변경</a></li>
+                        <li><a href="#">찜리스트</a></li>
+                        <li><a href="#">??</a></li> -->
+                    </ul>
+                </li>
+                <li data-action="showLogin" th:if="${session.user == null}">
+                    <a href="/user/login" id="showLogin">로그인</a>
+                </li>
+                <li data-action="shouLogout" th:if="${session.user != null}">
+                    <a href="/user/logout" id="showLogout">로그아웃</a>
+                </li>
+            </ul>
+
+        </nav>
+    </div>
+</div>
+<div class="high-pick">
+    <form id="pickForm" method="post" action="/myPick">
+        <input type="hidden" name="contentId" id="contentId" th:value="${place.getContentId()}">
+        <input type="hidden" name="placeTitle" id="place-Title" th:value="${place.getTitle()}">
+        <input type="hidden" name="areaCode" id="areaCode" th:value="${place.getAreaCode()}">
+        <input type="hidden" name="placePic" id="place-picture" th:value="${place.getFirstImage()}">
+        <input type="hidden" name="addr1" id="addr1" th:value="${place.getAddr1()}">
+        <button id="pickButton"  class="pick">찜하기</button>
+    </form>
+</div>
+<form id="detailForm" style="margin-top: -100px" method="post" action="/review" onsubmit="return detailSubmitForm()"
+      th:data-signed="${session.user != null}">
+    <div class="close" id="detailClose"></div>
+    <div class="high-container">
+        <div class="sight-container">
+            <h3 class="sight-title" id="placeTitle" th:text="${place.getTitle()}"></h3>
+            <input name="placeIndex" type="hidden" id="placeIndex" th:value="${place.getContentId()}">
+            <img th:src="${place.getFirstImage()}" class="image">
+            <div class="high-high">
+                <div class="high-mid">
+                    <img class="icon" th:src="@{/resources/images/place-address.png}" alt="">
+                    <span class="address" th:text="${place.getAddr1()}"></span>
+                </div>
+<!--                <input type="button" class="pick" value="찜하기">-->
+
+            </div>
+            <div class="overview-container" th:text="${place.getOverview()}">
+
+            </div>
+            <p style="display: none" id="mapX"  th:text="${place.getMapX()}"></p>
+            <p style="display: none" id="mapY"  th:text="${place.getMapY()}"></p>
+
+
+        </div>
+        <div class="review-container">
+            <div class="review-high">
+                <h4 class="title">리뷰</h4>
+                <i class="fa-solid fa-star"></i>
+                <span th:text="${reviewAverageScore}"></span>
+                <span>/5</span>
+            </div>
+
+            <div class="comment-container">
+                <div class="comment-box" th:each="review : ${reviews}">
+                    <div class="userComment-box">
+                        <div>
+                            <span class="comment-nickname" th:text="${review.getNickname()}"></span>
+                            <span class="comment-date"
+                                  th:text="${#dates.format(review.getCreatedAt(), 'yyyy-MM-dd HH:mm:ss')}"></span>
+                        </div>
+                        <div>
+                            <i class="fa-solid fa-star"></i>
+                            <span class="comment-stars" th:text="${review.getScore()}"></span>
+                        </div>
+                    </div>
+                    <div>
+                        <span class="comment" th:text="${review.getContent()}"></span>
+                    </div>
+                    <div class="modifyBox"
+                         th:if="${session.user != null and session.user.getNickname() == review.getNickname()}">
+                        <i class="fa-solid fa-pen-to-square">
+                            <input class="review patch" rel="reviewModify"
+                                   type="button" th:data-index="${review.getIndex()}"
+                                   th:data-text="${review.getContent()}" value="수정">
+                        </i>
+                        <i class="fa-solid fa-trash">
+                            <input class="review delete" rel="reviewDelete" type="button"
+                                   th:data-index="${review.
+                                   getIndex()}" value="삭제">
+                        </i>
+                    </div>
+                </div>
+            </div>
+            <div class="star-rating">
+                <div class="stars">
+                    <input type="radio" name="reviewStar" value="5" id="rate1"><label class="star" for="rate1">★</label>
+                    <input type="radio" name="reviewStar" value="4" id="rate2"><label class="star" for="rate2">★</label>
+                    <input type="radio" name="reviewStar" value="3" id="rate3"><label class="star" for="rate3">★</label>
+                    <input type="radio" name="reviewStar" value="2" id="rate4"><label class="star" for="rate4">★</label>
+                    <input type="radio" name="reviewStar" value="1" id="rate5"><label class="star" for="rate5">★</label>
+                </div>
+                <span>별점을 선택해주세요.</span>
+            </div>
+            <div>
+                <textarea type="text" name="reviewContent" id="reviewContents"
+                          placeholder="리뷰를 작성해 주세요!"></textarea>
+                <input class="write-btn" name="write" type="submit" value="작성하기">
+            </div>
+        </div>
+
+
+
+        <!--            <div class="review-low">-->
+        <!--                <label class="star-container">-->
+        <!--                    <i class="fa-solid fa-star"></i>-->
+        <!--                    <i class="fa-solid fa-star"></i>-->
+        <!--                    <i class="fa-solid fa-star"></i>-->
+        <!--                    <i class="fa-solid fa-star"></i>-->
+        <!--                    <i class="fa-solid fa-star"></i>-->
+        <!--                </label>-->
+        <!--                <label class="write-container">-->
+        <!--                    <input class="input comment" maxlength="100" minlength="1" placeholder="댓글을 입력해 주세요."-->
+        <!--                           type="text">-->
+        <!--                </label>-->
+        <!--            </div>-->
+    </div>
+    </div>
+    <div class="low-container">
+        <div id="map"></div>
+    </div>
+</form>
+
+
+<div id="modifyCover"></div>
+<form id="modifyForm">
+    <h2 class="title">리뷰 수정</h2>
+    <label class="label">
+        <input readonly class="input" name="index" type="hidden">
+    </label>
+    <label class="label">
+        <input class="input" name="content" type="text">
+    </label>
+    <div class="button-container">
+        <input class="button" rel="close" type="button" value="취소">
+        <input class="button modify" type="submit" value="수정하기">
+    </div>
+</form>
+</body>
+</html>

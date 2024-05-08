@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>OMCS - 게시글 작성페이지</title>
+    <link rel="stylesheet" th:href="@{/resources/stylesheets/community/write.css}">
+
+    <script th:src="@{/resources/libraries/ckeditor.js}"></script>
+    <script defer th:src="@{/resources/scripts/community/editWrite.js}"></script>
+    <script defer th:src="@{/resources/scripts/community/community.js}"></script>
+
+</head>
+<body>
+<div class="wrap">
+    <div class="head">
+        <div class="head-con">
+            <div class="logo">
+                <a href="/">오마코스<a>...</a><p>O<span>h</span> M<span>y</span> C<span>our</span>S<span>e</span></p>
+                </a>
+            </div>
+
+            <nav class="nav">
+                <ul class="main-menu">
+                    <li>
+                        <a href="/community">커뮤니티</a>
+                    </li>
+                    <li>
+                        <a href="/course">코스만들기</a>
+                    </li>
+                    <li class="userLi">
+                        <a href="mypage">마이페이지</a>
+                        <!--                    <a href="#"><img src="./icons/icons8-user-48.png" alt="마이페이지"></a>-->
+                        <ul class="sub-menu">
+                            <!-- <li><a href="#">내여행코스</a></li>
+                            <li><a href="#">비밀번호변경</a></li>
+                            <li><a href="#">찜리스트</a></li>
+                            <li><a href="#">??</a></li> -->
+                        </ul>
+                    </li>
+                </ul>
+
+            </nav>
+        </div>
+    </div>
+
+
+    <div class="contents">
+        <div class="write-container">
+            <form  id="editWriteForm" enctype="multipart/form-data">
+                <input type="hidden" name="index" th:value="${article.getIndex()}">
+                <label class="title-container">
+                    <span class="write-title">제목</span>
+                    <input class="title-input" name="title" th:value="${article.getTitle()}"  placeholder="제목을 입력해 주세요." type="text">
+                </label>
+                <div></div>
+                <label>
+                    <!--                    <span>내용</span>-->
+                    <textarea class="write-textarea" name="content" th:utext="${article.getContent()}" placeholder="내용을 입력해주세요"></textarea>
+                </label>
+
+                <div></div>
+                <label>
+                    <!--                    <span>첨부파일</span>-->
+                    <!--                    <input multiple name="files" type="file">-->
+                </label>
+                <div></div>
+                <input class="write-confirm" type="submit" value="수정하기">
+            </form>
+        </div>
+
+    </div>
+
+</div>
+
+</body>
+</html>

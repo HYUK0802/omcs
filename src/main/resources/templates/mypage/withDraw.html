@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>개인정보수정</title>
+    <link rel="stylesheet" th:href="@{/resources/stylesheets/mypage/modifynickname.css}">
+    <script defer th:src="@{/resources/scripts/mypage/withdraw.js}"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Nanum+Gothic&family=Noto+Sans+KR:wght@100;300;400;900&family=Roboto:wght@100&display=swap"
+          rel="stylesheet">
+
+
+    <script src="https://kit.fontawesome.com/ba55ade6bc.js" crossorigin="anonymous"></script>
+    <script src="//code.jquery.com/jquery-3.3.1.min.js"></script>
+</head>
+<body>
+<form id="withDraw">
+    <header>
+        <h2 class="logo"><a href="/">
+            <p>O<span>h</span> M<span>y</span> C<span>our</span>S<span>e</span></p>
+        </a></h2>
+        <nav class="navigation">
+            <a href="/community">커뮤니티</a>
+            <a href="/course">코스만들기</a>
+            <a href="/mypage">마이페이지</a>
+        </nav>
+    </header>
+<!--        <a href="#" class="navbar _toogleBtn">-->
+<!--            <i class="fa-solid fa-bars"></i>-->
+<!--        </a>-->
+<div class="containerForm">
+    <div class="banner">
+        <div class="content">
+            <div>
+                <i class="fa-solid fa-person"></i>
+            </div>
+            <h2 th:text="${session.user.getNickname()}"></h2>
+            <h2>님 반갑습니다!</h2>
+            <a href="/myplan">나의 일정</a>
+        </div>
+    </div>
+
+    <div class="personalInfo">
+        <div class="formBox">
+            <h3>회원 탈퇴</h3>
+                <div class="inputContainer">
+                    <label class="md-title">전화 번호 인증</label>
+                    <div class="inputWithButton">
+                        <div class="inputBox">
+                            <input type="text" name="contact" class="boxContent">
+                        </div>
+                        <button name="sendContactCode" class="editButton" type="button">인증번호 전송</button>
+                    </div>
+                </div>
+
+                <div class="inputContainer">
+                    <label class="md-title">인증번호 확인</label>
+                    <div class="inputWithButton">
+                        <div class="inputBox">
+                            <input name="verifyCode" type="text" id="verificationCodeInput" required>
+                        </div>
+                        <button name="verifyContactCode" class="editButton" type="button">인증번호 확인</button>
+                        <input hidden name="eContactSalt" type="hidden">
+                    </div>
+                </div>
+
+                <button name="deleteButton" class="editButton" type="button">탈퇴하기</button>
+        </div>
+    </div>
+</div>
+
+</form>
+</body>
+</html>

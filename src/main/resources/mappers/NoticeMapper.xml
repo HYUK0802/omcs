@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ohmycouse.teampractice.mappers.NoticeMapper">
+    <insert id="insert"
+            useGeneratedKeys="true"
+            keyColumn="index"
+            keyProperty="index"
+            parameterType="com.ohmycouse.teampractice.entities.NoticeEntity">
+        INSERT INTO `omcs`.`notice`(`datetime`, `writer`, `title`, `text`)
+            VALUE (#{datetime}, #{writer}, #{title}, #{text})
+    </insert>
+    <select id="selectAll"
+            resultType="com.ohmycouse.teampractice.entities.NoticeEntity">
+        SELECT `index`    AS `index`,
+               `datetime` AS `datetime`,
+               `writer`   AS `writer`,
+               `title`    AS `title`,
+               `text`     AS `text`
+        FROM `omcs`.`notice`
+        order by `index` desc;
+    </select>
+
+    <select id="selectCount" resultType="int">
+        SELECT COUNT(0) AS `count`
+        FROM `omcs`.`notice`
+        <if test='searchCriterion.equals("content")'>
+            WHERE `text` LIKE CONCAT('%', #{searchQuery}, '%')
+        </if>
+        <if test='searchCriterion.equals("writer")'>
+            WHERE BINARY `writer` = #{searchQuery}
+        </if>
+    </select>
+
+    <select id="selectByPage"
+            resultType="com.ohmycouse.teampractice.entities.NoticeEntity">
+        SELECT `index` AS `index`,
+        `datetime` AS `datetime`,
+        `writer` AS `writer`,
+        `title` AS `title`,
+        `text` AS `text`
+        FROM `omcs`.`notice`
+        <if test='searchCriterion.equals("content")'>
+            WHERE `text` LIKE CONCAT('%', #{searchQuery}, '%')
+        </if>
+        <if test='searchCriterion.equals("writer")'>
+            WHERE BINARY `writer` = #{searchQuery}
+        </if>
+        ORDER BY `index` DESC
+        LIMIT #{pagingModel.pageCount} OFFSET #{pagingModel.offset};
+    </select>
+    <insert id="insertNotice"
+    parameterType="com.ohmycouse.teampractice.entities.NoticeEntity">
+        INSERT INTO `omcs`.`notice`(`title`, `text`)
+            VALUE (
+                   #{title},
+                   #{text}
+            )
+    </insert>
+    <delete id="deleteNotice">
+        DELETE
+        FROM `omcs`.`notice`
+        WHERE `index` = #{index}
+        LIMIT 1
+    </delete>
+    <update id="updateByNotice">
+        UPDATE `omcs`.`notice`
+        SET `text` = #{text}
+        WHERE `index` = #{index}
+        LIMIT 1
+    </update>
+</mapper>
